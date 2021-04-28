@@ -31,6 +31,9 @@ public class Window {
     private long window;
     private final float bgR, bgG, bgB, bgA;
 
+    float[] arc = setArc(0, 0, 2.0f, 30.0d, 180.0d, 10);
+    int[] arcIndices = setArcIndices(10);
+
     //mouse control
     boolean mouseInitiated = false;
     float lastX, lastY;
@@ -64,6 +67,7 @@ public class Window {
 
     private VertexArray va;
     private VertexArray floorVA;
+    private VertexArray circleVA;
     private Shader shader;
     private Shader floorShader;
 
@@ -118,8 +122,10 @@ public class Window {
         //set and crate vertex arrays
         va = new VertexArray(getCube(), getCubeIndices());
         floorVA = new VertexArray(getFloor(), getFloorIndices());
+        circleVA = new VertexArray(arc, arcIndices);
         va.create();
         floorVA.create();
+        circleVA.create();
         //set shaders
         shader = new Shader("src/learnOpenGL/shader/cubesVertex.glsl", "src/learnOpenGL/shader/cubesFragment.glsl");
         floorShader = new Shader("src/learnOpenGL/shader/cubesVertex.glsl", "src/learnOpenGL/shader/floorFragment.glsl");
@@ -198,6 +204,14 @@ public class Window {
         glUniformMatrix4fv(glGetUniformLocation(floorShader.getShaderProgram(), "projection"), false, projectionArray);
         GL30.glBindVertexArray(floorVA.getVao());
         draw(6);
+
+        //circle
+        shader.loadProgram();
+        model.translation(0,0,0);
+        model.get(modelArray);
+        glUniformMatrix4fv(glGetUniformLocation(shader.getShaderProgram(), "model"), false, modelArray);
+        GL30.glBindVertexArray(circleVA.getVao());
+        draw(arc.length/8);
 
         GLFW.glfwPollEvents();
     }

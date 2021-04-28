@@ -48,8 +48,8 @@ public class Voronoi {
         }
 
         StdDraw.setPenColor(Color.BLACK);
-        for (int i =0; i < sites.length; i++) {
-            StdDraw.filledCircle(sites[i].getX(), sites[i].getY(), 3);
+        for (Point2D site : sites) {
+            StdDraw.filledCircle(site.getX(), site.getY(), 3);
         }
     }
 

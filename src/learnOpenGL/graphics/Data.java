@@ -92,6 +92,51 @@ public class Data {
 
     private static final Vector3f floorPosition = new Vector3f(0.0f, -2.2f,0.0f);
 
+    private static float[] getFilledArcVertexes(float x, float y, float r, double startingAngleDeg, double endAngleDeg, int slices) {
+        int radius = (int) r;
+
+        double arcAngleLength = (endAngleDeg - startingAngleDeg) * Math.PI / 180f;
+
+        float[] vertexes = new float[slices*24];
+
+        double initAngle = Math.PI / 180f * startingAngleDeg;
+        float prevXA = (float) Math.cos(initAngle) * radius;
+        float prevYA = (float) Math.sin(initAngle) * radius;
+
+        for(int arcIndex = 0; arcIndex < slices; arcIndex++) {
+            double angle = startingAngleDeg * Math.PI / 180f + arcAngleLength * ((float)arcIndex + 1) / ((float)slices);
+            int index = arcIndex * 24;
+            float xa = (float) Math.cos(angle) * radius;
+            float ya = (float) Math.sin(angle) * radius;
+            vertexes[index] = x;
+            vertexes[index+1] = y;
+            vertexes[index+8] = x+prevXA;
+            vertexes[index+9] = y+prevYA;
+            vertexes[index+16] = x+xa;
+            vertexes[index+17] = y+ya;
+            prevXA = xa;
+            prevYA = ya;
+        }
+
+        return vertexes;
+    }
+
+    public static int[] generateArcIndices(int slices) {
+        int[] arcIndices = new int[slices*3];
+        for (int i = 0; i < arcIndices.length; i++) {
+            arcIndices[i] = i;
+        }
+        return arcIndices;
+    }
+
+    public static float[] setArc(float x, float y, float r, double startingAngleDeg, double endAngleDeg, int slices) {
+        return getFilledArcVertexes(x, y, r, startingAngleDeg, endAngleDeg, slices);
+    }
+
+    public static int[] setArcIndices(int slices) {
+        return generateArcIndices(slices);
+    }
+
     public static float[] getCube() {
         return cube;
     }
