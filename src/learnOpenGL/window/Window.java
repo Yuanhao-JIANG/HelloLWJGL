@@ -97,17 +97,22 @@ public class Window {
             System.out.println("GLFW wasn't initialized");
         }
 
+        /*MacOS uses Legacy Profile as default for all created OpenGL context. Therefore by default only OpenGL up to
+        2.1 and GLSL up to 1.20 is supported. To use OpenGL 3.2+ you need to switch to the Core Profile.
+        the following 4 lines of codes do the work so that we can use our shader.*/
         GLFW.glfwWindowHint(GLFW.GLFW_CONTEXT_VERSION_MAJOR, 3);
         GLFW.glfwWindowHint(GLFW.GLFW_CONTEXT_VERSION_MINOR, 3);
         GLFW.glfwWindowHint(GLFW.GLFW_OPENGL_PROFILE, GLFW.GLFW_OPENGL_CORE_PROFILE);
         GLFW.glfwWindowHint(GLFW.GLFW_OPENGL_FORWARD_COMPAT, GL11.GL_TRUE);
+
         window = GLFW.glfwCreateWindow(width, height, title, 0, 0);
         if (window == 0) {
             System.err.println("ERROR: Window wasn't created");
             return;
         }
         GLFW.glfwMakeContextCurrent(window);
-        GL.createCapabilities();
+        glfwSwapInterval(1); // default is 1
+        GL.createCapabilities(); //must have
 
         GL11.glViewport(0, 0, width, height);
 
