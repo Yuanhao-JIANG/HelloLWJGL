@@ -1,4 +1,4 @@
-package learnOpenGL.window;
+package firstOpenGLGame.main.java.jade;
 
 import org.lwjgl.glfw.GLFWCursorPosCallback;
 import org.lwjgl.glfw.GLFWKeyCallback;
@@ -49,6 +49,9 @@ public class Input {
         return mouseButtonStatus[mouseButton];
     }
 
+    public static boolean isDragging() {
+        return isMouseButtonDown(GLFW_MOUSE_BUTTON_LEFT);
+    }
     public static void calculateOffset() {
         if (!isMouseInitiated && (getMouseX() != 0|| getMouseY() != 0)) {
             lastX = getMouseX();

@@ -17,8 +17,7 @@ import static learnOpenGL.graphics.Texture.upload;
 import static learnOpenGL.graphics.VertexArray.draw;
 import static learnOpenGL.math.VectorUtil.*;
 import static learnOpenGL.math.VelocityUtil.getVelocity;
-import static learnOpenGL.window.Input.getMouseX;
-import static learnOpenGL.window.Input.getMouseY;
+import static learnOpenGL.window.Input.*;
 import static org.joml.Math.*;
 import static org.lwjgl.glfw.GLFW.*;
 import static org.lwjgl.opengl.GL13.*;
@@ -272,21 +271,10 @@ public class Window {
         }
 
         //mouse moving
-        if (!mouseInitiated && (getMouseX() != 0|| getMouseY() != 0)) {
-            lastX = getMouseX();
-            lastY = getMouseY();
-            mouseInitiated = true;
-        }
-        xOffset = getMouseX() - lastX;
-        yOffset = lastY - getMouseY();
-        lastX = getMouseX();
-        lastY = getMouseY();
+        calculateOffset();
 
-        xOffset *= mouseSensitivity;
-        yOffset *= mouseSensitivity;
-
-        yaw   += xOffset;
-        pitch += yOffset;
+        yaw   += getXOffset() * mouseSensitivity;
+        pitch += getYOffset() * mouseSensitivity;
         if (yaw > 360.0f) yaw -= 360.0f;
         if (yaw < -360.0f) yaw += 360.0f;
         if (pitch > 89.0f) pitch = 89.0f;
@@ -298,14 +286,14 @@ public class Window {
         cameraFront.set(direction);
 
         //zooming
-        scrollYOffset = Input.getScrollYOffset();
+        scrollYOffset = getScrollYOffset();
         if (scrollYOffset != 0) {
             scrollYOffsetStore = scrollYOffset;
             fovStore = fov;
         }
         float scale = scrollYOffsetStore * scrollSensitivity;
-        if (scrollYOffsetStore < 0 && fov - 0.005 * scale < fovStore - scale) fov -= scale * 0.005;
-        if (scrollYOffsetStore > 0 && fov - 0.005 * scale > fovStore - scale) fov -= scale * 0.005;
+        if (scrollYOffsetStore < 0 && fov - 0.1 * scale < fovStore - scale) fov -= scale * 0.1;
+        if (scrollYOffsetStore > 0 && fov - 0.1 * scale > fovStore - scale) fov -= scale * 0.1;
         if (fov < 1.0f) fov = 1.0f;
         if (fov > 45.0f) fov = 45.0f;
     }

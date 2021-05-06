@@ -4,7 +4,7 @@ import firstOpenGLGame.main.java.jade.Window;
 
 public class Main {
     public static void main(String[] args) {
-        Window window = Window.get(520, 480, "Mario");
+        Window window = Window.get(960, 540, "Mario");
         window.run();
     }
 }

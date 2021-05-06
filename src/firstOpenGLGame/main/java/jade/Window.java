@@ -5,6 +5,10 @@ import org.lwjgl.glfw.GLFW;
 import org.lwjgl.glfw.GLFWErrorCallback;
 import org.lwjgl.opengl.GL11;
 
+import java.util.Objects;
+
+import static firstOpenGLGame.main.java.jade.Input.*;
+import static org.lwjgl.glfw.Callbacks.glfwFreeCallbacks;
 import static org.lwjgl.glfw.GLFW.*;
 import static org.lwjgl.opengl.GL.createCapabilities;
 import static org.lwjgl.opengl.GL11.*;
@@ -35,6 +39,11 @@ public class Window {
 
         init();
         loop();
+
+        glfwFreeCallbacks(glfwWindow);
+        glfwDestroyWindow(glfwWindow);
+        glfwTerminate();
+        Objects.requireNonNull(glfwSetErrorCallback(null)).free();
     }
 
     public void init() {
@@ -53,10 +62,19 @@ public class Window {
         glfwWindow = glfwCreateWindow(this.width, this.height, this.title, NULL, NULL);
         if (glfwWindow == NULL) throw new IllegalStateException("Fail to crate GLFW window.");
 
+        setCallbacks();
+
         glfwMakeContextCurrent(glfwWindow);
         glfwSwapInterval(1);
         glfwShowWindow(glfwWindow); // set to visible after window is fully created
         createCapabilities(); // must have
+    }
+
+    private void setCallbacks() {
+        GLFW.glfwSetKeyCallback(glfwWindow, getKeyCallback());
+        GLFW.glfwSetMouseButtonCallback(glfwWindow, getMouseButtonCallback());
+        GLFW.glfwSetCursorPosCallback(glfwWindow, getCursorPosCallback());
+        GLFW.glfwSetScrollCallback(glfwWindow, getScrollCallback());
     }
 
     public void loop() {
