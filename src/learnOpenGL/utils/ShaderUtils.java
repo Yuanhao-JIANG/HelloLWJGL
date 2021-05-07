@@ -21,6 +21,7 @@ public class ShaderUtils {
         glShaderSource(fragID, frag);
 
         glCompileShader(vertID);
+        //glGetShaderi(shaderID, GL_COMPILE_STATUS) will return 0 if compile is not successful
         if (glGetShaderi(vertID, GL_COMPILE_STATUS) == GL_FALSE) {
             System.err.println("Failed to compile vertex shader!");
             System.err.println(glGetShaderInfoLog(vertID));
@@ -37,7 +38,8 @@ public class ShaderUtils {
         glAttachShader(program, vertID);
         glAttachShader(program, fragID);
         glLinkProgram(program);
-        glValidateProgram(program);
+        glValidateProgram(program); // glValidateProgram checks to see whether the executables
+                                    // contained in program can execute given the current OpenGL state
 
         glDeleteShader(vertID);
         glDeleteShader(fragID);
