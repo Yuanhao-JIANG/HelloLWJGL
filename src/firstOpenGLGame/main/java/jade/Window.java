@@ -15,10 +15,11 @@ import static org.lwjgl.opengl.GL11.*;
 import static org.lwjgl.system.MemoryUtil.NULL;
 
 public class Window {
-    private int width, height;
-    private String title;
+    private final int width, height;
+    private final String title;
     private static Window window = null;
     private long glfwWindow;
+    private static Scene currentScene;
 
     private Window(int width, int height, String title) {
         this.width = width;
@@ -32,6 +33,20 @@ public class Window {
         }
 
         return Window.window;
+    }
+
+    public static void changeScene(int newScene) {
+        switch (newScene) {
+            case 0:
+                currentScene = new LevelEditorScene();
+                break;
+            case 1:
+                currentScene = new LevelScene();
+                break;
+            default:
+                assert false: "Unknown scene" + newScene + ".";
+                break;
+        }
     }
 
     public void run() {
@@ -62,12 +77,14 @@ public class Window {
         glfwWindow = glfwCreateWindow(this.width, this.height, this.title, NULL, NULL);
         if (glfwWindow == NULL) throw new IllegalStateException("Fail to crate GLFW window.");
 
-        setCallbacks();
 
         glfwMakeContextCurrent(glfwWindow);
         glfwSwapInterval(1);
         glfwShowWindow(glfwWindow); // set to visible after window is fully created
         createCapabilities(); // must have
+        setCallbacks();
+
+        changeScene(0);
     }
 
     private void setCallbacks() {
@@ -78,11 +95,18 @@ public class Window {
     }
 
     public void loop() {
+        float currentTime;
+        float lastTime = (float) glfwGetTime();
+        float deltaTime = 0;
         while (!glfwWindowShouldClose(glfwWindow)) {
-            glfwPollEvents();
+            currentTime = (float) glfwGetTime(); // in seconds
+            deltaTime = currentTime - lastTime;
+            lastTime = currentTime;
 
+            glfwPollEvents();
             glClearColor(1.0f, 0.0f, 0.0f, 1.0f);
             glClear(GL_COLOR_BUFFER_BIT);
+            currentScene.update(deltaTime);
 
             glfwSwapBuffers(glfwWindow);
         }

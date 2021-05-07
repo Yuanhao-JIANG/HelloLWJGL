@@ -34,9 +34,6 @@ public class Window {
     int[] arcIndices = setArcIndices(10);
 
     //mouse control
-    boolean mouseInitiated = false;
-    float lastX, lastY;
-    float xOffset, yOffset;
     float scrollYOffset;
     float scrollYOffsetStore, fovStore;
     float mouseSensitivity = 0.1f, scrollSensitivity = 0.7f;
@@ -163,9 +160,9 @@ public class Window {
     }
 
     public void update(){
-        float currentFrame = (float) glfwGetTime();
+        float currentFrame = (float) glfwGetTime(); // in seconds
         deltaTime = currentFrame - lastFrame;
-        lastFrame = currentFrame;
+        lastFrame = currentFrame; // currentTime and lastTime may have stack overflow error
         processInput(window);
 
         GL11.glClearColor(bgR, bgG, bgB, bgA);
