@@ -17,19 +17,24 @@ import static org.lwjgl.system.MemoryUtil.NULL;
 public class Window {
     private final int width, height;
     private final String title;
+    private final float clearColorR, clearColorG, clearColorB, clearColorA;
     private static Window window = null;
     private long glfwWindow;
     private static Scene currentScene;
 
-    private Window(int width, int height, String title) {
+    private Window(int width, int height, String title, float r, float g, float b, float a) {
         this.width = width;
         this.height = height;
         this.title = title;
+        this.clearColorR = r;
+        this.clearColorG = g;
+        this.clearColorB = b;
+        this.clearColorA = a;
     }
 
-    public static Window get(int width, int height, String title) {
+    public static Window get(int width, int height, String title, float r, float g, float b, float a) {
         if (Window.window == null) {
-            Window.window = new Window(width, height, title);
+            Window.window = new Window(width, height, title, r, g, b, a);
         }
 
         return Window.window;
@@ -39,9 +44,11 @@ public class Window {
         switch (newScene) {
             case 0:
                 currentScene = new LevelEditorScene();
+                currentScene.init();
                 break;
             case 1:
                 currentScene = new LevelScene();
+                currentScene.init();
                 break;
             default:
                 assert false: "Unknown scene" + newScene + ".";
@@ -97,14 +104,14 @@ public class Window {
     public void loop() {
         float currentTime;
         float lastTime = (float) glfwGetTime();
-        float deltaTime = 0;
+        float deltaTime;
         while (!glfwWindowShouldClose(glfwWindow)) {
             currentTime = (float) glfwGetTime(); // in seconds
             deltaTime = currentTime - lastTime;
             lastTime = currentTime;
 
             glfwPollEvents();
-            glClearColor(1.0f, 0.0f, 0.0f, 1.0f);
+            glClearColor(clearColorR, clearColorG, clearColorB, clearColorA);
             glClear(GL_COLOR_BUFFER_BIT);
             currentScene.update(deltaTime);
 

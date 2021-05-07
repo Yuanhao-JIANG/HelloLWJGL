@@ -30,7 +30,7 @@ public class Window {
     private long window;
     private final float bgR, bgG, bgB, bgA;
 
-    float[] arc = setArc(0, 0, 2.0f, 30.0d, 180.0d, 10);
+    float[] arc = setArc(0, 0, 1.0f, 30.0d, 180.0d, 10);
     int[] arcIndices = setArcIndices(10);
 
     //mouse control
@@ -45,7 +45,7 @@ public class Window {
     float currentSpeed = jumpSpeed;
     float g = -10.0f;
     boolean isJumping = false;
-    Vector3f cameraPos = new Vector3f(0.0f, groundPosHeight, 3.0f);
+    Vector3f cameraPos = new Vector3f(0.0f, groundPosHeight, 0.12f);
     Vector3f cameraFront = new Vector3f(0.0f, 0.0f, -1.0f);
     Vector3f cameraUp = new Vector3f(0.0f, 1.0f, 0.0f);
     Vector3f cameraTarget = new Vector3f();
@@ -208,7 +208,7 @@ public class Window {
 
         //circle
         shader.loadProgram();
-        model.translation(0,0,0);
+        model.translation(cameraPos.x,cameraPos.y,0);
         model.get(modelArray);
         glUniformMatrix4fv(glGetUniformLocation(shader.getShaderProgram(), "model"), false, modelArray);
         GL30.glBindVertexArray(circleVA.getVao());
