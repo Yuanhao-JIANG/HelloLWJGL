@@ -128,8 +128,10 @@ public class Window {
         floorVA.create();
         circleVA.create();
         //set shaders
-        shader = new Shader("src/learnOpenGL/shader/cubesVertex.glsl", "src/learnOpenGL/shader/cubesFragment.glsl");
-        floorShader = new Shader("src/learnOpenGL/shader/cubesVertex.glsl", "src/learnOpenGL/shader/floorFragment.glsl");
+        shader = new Shader("src/learnOpenGL/shader/cubesVertex.glsl",
+                "src/learnOpenGL/shader/cubesFragment.glsl");
+        floorShader = new Shader("src/learnOpenGL/shader/cubesVertex.glsl",
+                "src/learnOpenGL/shader/floorFragment.glsl");
         //set textures
         Texture texture1 = new Texture("src/learnOpenGL/texture/container.jpg");
         Texture texture2 = new Texture("src/learnOpenGL/texture/awesomeFace.png");
@@ -180,7 +182,8 @@ public class Window {
         GL30.glBindVertexArray(va.getVao());
         shader.loadProgram();
         glUniformMatrix4fv(glGetUniformLocation(shader.getShaderProgram(), "view"), false, viewArray);
-        glUniformMatrix4fv(glGetUniformLocation(shader.getShaderProgram(), "projection"), false, projectionArray);
+        glUniformMatrix4fv(glGetUniformLocation(shader.getShaderProgram(), "projection"),
+                false, projectionArray);
         for (int i = 0; i < 10; i++) {
             model.translation(getCubePositions()[i]);
             Vector3f rotateAxis = new Vector3f();
@@ -191,7 +194,8 @@ public class Window {
             }
             model.rotate((float) glfwGetTime() * toRadians(20.0f * (i + 1.0f)), rotateAxis.normalize());
             model.get(modelArray);
-            glUniformMatrix4fv(glGetUniformLocation(shader.getShaderProgram(), "model"), false, modelArray);
+            glUniformMatrix4fv(glGetUniformLocation(shader.getShaderProgram(), "model"), false,
+                    modelArray);
             draw(36);
         }
 
@@ -200,9 +204,12 @@ public class Window {
         floorModel.translation(getFloorPosition());
         floorModel.scale(10);
         floorModel.get(floorModelArray);
-        glUniformMatrix4fv(glGetUniformLocation(floorShader.getShaderProgram(), "model"), false, floorModelArray);
-        glUniformMatrix4fv(glGetUniformLocation(floorShader.getShaderProgram(), "view"), false, viewArray);
-        glUniformMatrix4fv(glGetUniformLocation(floorShader.getShaderProgram(), "projection"), false, projectionArray);
+        glUniformMatrix4fv(glGetUniformLocation(floorShader.getShaderProgram(), "model"), false,
+                floorModelArray);
+        glUniformMatrix4fv(glGetUniformLocation(floorShader.getShaderProgram(), "view"), false,
+                viewArray);
+        glUniformMatrix4fv(glGetUniformLocation(floorShader.getShaderProgram(), "projection"), false,
+                projectionArray);
         GL30.glBindVertexArray(floorVA.getVao());
         draw(6);
 

@@ -33,13 +33,15 @@ public class VertexArray {
         // actually just indices for the second would be accepted
         GL15.glBufferData(GL15.GL_ELEMENT_ARRAY_BUFFER, BufferUtils.createIntBuffer(indices), GL15.GL_STATIC_DRAW);
 
-        GL20.glVertexAttribPointer(0, 3, GL11.GL_FLOAT, false, 32, 0);
+        GL20.glVertexAttribPointer(0, 3, GL11.GL_FLOAT, false, 8 * Float.BYTES, 0);
         GL30.glEnableVertexAttribArray(0);
 
-        GL20.glVertexAttribPointer(1, 3, GL11.GL_FLOAT, false, 32, 12);
+        GL20.glVertexAttribPointer(1, 3, GL11.GL_FLOAT, false, 8 * Float.BYTES,
+                3 * Float.BYTES);
         GL30.glEnableVertexAttribArray(1);
 
-        GL20.glVertexAttribPointer(2, 2, GL11.GL_FLOAT, false, 32, 24);
+        GL20.glVertexAttribPointer(2, 2, GL11.GL_FLOAT, false, 8 * Float.BYTES,
+                6 * Float.BYTES);
         GL30.glEnableVertexAttribArray(2);
         /*Each vertex attribute takes its data from memory managed by a VBO and which VBO it takes its data from (you
         can have multiple VBOs) is determined by the VBO currently bound to GL_ARRAY_BUFFER when calling
