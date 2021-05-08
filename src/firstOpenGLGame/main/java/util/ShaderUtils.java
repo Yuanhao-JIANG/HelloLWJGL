@@ -1,5 +1,7 @@
 package firstOpenGLGame.main.java.util;
 
+import org.joml.Matrix4f;
+
 import static firstOpenGLGame.main.java.util.FileUtils.loadAsString;
 import static org.lwjgl.opengl.GL20.*;
 
@@ -45,5 +47,13 @@ public class ShaderUtils {
         glDeleteShader(fragID);
 
         return programID;
+    }
+
+    public static void uploadMatrix4f(int shaderProgram, String matName,
+                               Matrix4f matrix4f) {
+        float[] matArray = new float[16];
+        matrix4f.get(matArray);
+        glUniformMatrix4fv(glGetUniformLocation(shaderProgram, matName),
+                false, matArray);
     }
 }
