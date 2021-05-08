@@ -1,6 +1,8 @@
 package firstOpenGLGame.main.java.util;
 
 import org.joml.Matrix4f;
+import org.joml.Vector3f;
+import org.joml.Vector4f;
 
 import static firstOpenGLGame.main.java.util.FileUtils.loadAsString;
 import static org.lwjgl.opengl.GL20.*;
@@ -55,5 +57,16 @@ public class ShaderUtils {
         matrix4f.get(matArray);
         glUniformMatrix4fv(glGetUniformLocation(shaderProgram, matName),
                 false, matArray);
+    }
+
+    public static void uploadVector4f(int shaderProgram, String matName,
+                                      Vector4f vector4f) {
+        glUniform4f(glGetUniformLocation(shaderProgram, matName), vector4f.x,
+                vector4f.y, vector4f.z, vector4f.w);
+    }
+
+    public static void uploadFloat(int shaderProgram, String matName,
+                                      float value) {
+        glUniform1f(glGetUniformLocation(shaderProgram, matName), value);
     }
 }

@@ -1,8 +1,11 @@
 #version 330 core
 in vec4 fColor;
 
+uniform float uTime;
+
 out vec4 color;
 
 void main() {
-    color = fColor;
+    float noise = fract(sin(dot(fColor.xy ,vec2(12.9898,78.233))) * 43758.5453);
+    color = fColor * noise;
 }
