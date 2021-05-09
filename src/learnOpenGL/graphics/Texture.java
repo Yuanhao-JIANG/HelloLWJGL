@@ -38,6 +38,7 @@ public class Texture {
         if (nrChannels.get(0) == 3) {
             glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width.get(0), height.get(0), 0, GL_RGB, GL_UNSIGNED_BYTE, data);
         } else if (nrChannels.get(0) == 4) {
+            //to enable alpha value in images (png)
             glEnable(GL_BLEND);// you enable blending function
             glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
