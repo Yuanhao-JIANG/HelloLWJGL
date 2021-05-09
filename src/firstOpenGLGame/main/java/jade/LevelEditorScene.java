@@ -1,5 +1,7 @@
 package firstOpenGLGame.main.java.jade;
 
+import firstOpenGLGame.main.java.components.FontRenderer;
+import firstOpenGLGame.main.java.components.SpriteRenderer;
 import firstOpenGLGame.main.java.util.ShaderUtils;
 
 import static firstOpenGLGame.main.java.util.ShaderUtils.*;
@@ -28,11 +30,17 @@ public class LevelEditorScene extends Scene{
     int vao;
     Camera camera;
     int testTexture;
+    GameObject testObj;
 
     public LevelEditorScene() {}
 
     @Override
     public void init() {
+        System.out.println("Creating test object.");
+        testObj = new GameObject("test Object");
+        testObj.addComponent(new SpriteRenderer());
+        testObj.addComponent(new FontRenderer());
+        addGameObjectToScene(testObj);
         shaderProgram = ShaderUtils.load(
                 "src/firstOpenGLGame/assets/shaders/vertex.glsl",
                 "src/firstOpenGLGame/assets/shaders/fragment.glsl");
@@ -60,6 +68,10 @@ public class LevelEditorScene extends Scene{
 
         glUseProgram(0);
         glBindVertexArray(0);
+
+        for (GameObject gameObject : gameObjects) {
+            gameObject.update(dt);
+        }
     }
 
 
