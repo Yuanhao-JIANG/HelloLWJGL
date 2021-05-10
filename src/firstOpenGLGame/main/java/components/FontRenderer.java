@@ -1,13 +1,12 @@
 package firstOpenGLGame.main.java.components;
 
 import firstOpenGLGame.main.java.jade.Component;
-import firstOpenGLGame.main.java.jade.GameObject;
 
 public class FontRenderer extends Component {
     private boolean isUpdating = false;
     @Override
     public void start() {
-        if (gameObject.getComponent(SpriteRenderer.class) != null) {
+        if (gameObject.getComponent(Sprite.class) != null) {
             System.out.println("Start font renderer.");
         }
     }

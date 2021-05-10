@@ -1,78 +1,48 @@
 package firstOpenGLGame.main.java.jade;
 
-import firstOpenGLGame.main.java.components.FontRenderer;
-import firstOpenGLGame.main.java.components.SpriteRenderer;
-import firstOpenGLGame.main.java.util.ShaderUtils;
-
-import static firstOpenGLGame.main.java.util.ShaderUtils.*;
-import static firstOpenGLGame.main.java.util.TextureUtil.genTextureID;
-import static firstOpenGLGame.main.java.util.VAOUtil.createVAO;
-import static firstOpenGLGame.main.java.util.VAOUtil.draw;
-import static org.lwjgl.glfw.GLFW.glfwGetTime;
-import static org.lwjgl.opengl.GL13.GL_TEXTURE0;
-import static org.lwjgl.opengl.GL20.glUseProgram;
-import static org.lwjgl.opengl.GL30.glBindVertexArray;
+import firstOpenGLGame.main.java.components.Sprite;
+import firstOpenGLGame.main.java.renderer.Renderer;
+import org.joml.Vector2f;
+import org.joml.Vector4f;
 
 public class LevelEditorScene extends Scene{
-    //private boolean changeScene = false;
-    private final float[] vertexArray = {
-            //position               //color                    //texture cord
-            100.0f,   0.0f, 0.0f,    1.0f, 0.0f, 0.0f, 1.0f,    1, 0, //bottom right
-              0.0f,   100f, 0.0f,    0.0f, 1.0f, 0.0f, 1.0f,    0, 1, //top left
-            100.0f, 100.0f, 0.0f,    1.0f, 0.0f, 1.0f, 1.0f,    1, 1, //top right
-              0.0f,   0.0f, 0.0f,    1.0f, 1.0f, 0.0f, 1.0f,    0, 0  //bottom left
-    };
-    private final int[] elementArray = {
-            2, 1, 0, //top right triangle
-            0, 1, 3 //bottom left triangle
-    };
-    int shaderProgram;
-    int vao;
-    Camera camera;
-    int testTexture;
     GameObject testObj;
 
     public LevelEditorScene() {}
 
     @Override
     public void init() {
-        System.out.println("Creating test object.");
-        testObj = new GameObject("test Object");
-        testObj.addComponent(new SpriteRenderer());
-        testObj.addComponent(new FontRenderer());
-        addGameObjectToScene(testObj);
-        shaderProgram = ShaderUtils.load(
-                "src/firstOpenGLGame/assets/shaders/vertex.glsl",
-                "src/firstOpenGLGame/assets/shaders/fragment.glsl");
-        vao = createVAO(vertexArray, elementArray);
         camera = new Camera();
-        testTexture = genTextureID("src/firstOpenGLGame/assets/images/testImage.png");
+        renderer = new Renderer();
+        int xOffset = 10;
+        int yOffset = 10;
 
-        setTextUnit(shaderProgram, "tex", 0);
-        bindTexture(GL_TEXTURE0, testTexture);
+        float totalWidth = (float)(600 - xOffset * 2);
+        float totalHeight = (float)(300 - yOffset * 2);
+        float sizeX = totalWidth / 100.0f;
+        float sizeY = totalHeight / 100.0f;
+        float padding = 3;
+
+        for (int x=0; x < 100; x++) {
+            for (int y=0; y < 100; y++) {
+                float xPos = xOffset + (x * sizeX) + (padding * x);
+                float yPos = yOffset + (y * sizeY) + (padding * y);
+
+                GameObject gameObject = new GameObject("Obj" + x + "" + y,
+                        new Transform(new Vector2f(xPos, yPos), new Vector2f(sizeX, sizeY)));
+                gameObject.addComponent(new Sprite(new Vector4f(xPos / totalWidth, yPos / totalHeight, 1,
+                        1)));
+                addGameObjectToScene(gameObject);
+            }
+        }
     }
 
     @Override
     public void update(float dt) {
-        camera.camPos.x -= dt * 50.0f;
-        camera.camPos.y -= dt * 50.0f;
-        camera.camPos.add(camera.camFront, camera.camTarget);
-        glUseProgram(shaderProgram);
-        uploadMatrix4f(shaderProgram, "uProjection",
-                camera.getOrthoProjectionMatrix());
-        uploadMatrix4f(shaderProgram, "uView",
-                camera.getViewMatrix());
-        uploadFloat(shaderProgram, "uTime", (float) glfwGetTime());
-        glBindVertexArray(vao);
-        draw(6);
-
-        glUseProgram(0);
-        glBindVertexArray(0);
-
         for (GameObject gameObject : gameObjects) {
             gameObject.update(dt);
         }
+
+        renderer.render();
     }
-
-
 }
