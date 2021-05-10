@@ -6,8 +6,6 @@ import org.joml.Vector2f;
 import org.joml.Vector4f;
 
 public class LevelEditorScene extends Scene{
-    GameObject testObj;
-
     public LevelEditorScene() {}
 
     @Override

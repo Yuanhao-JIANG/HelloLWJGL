@@ -3,7 +3,6 @@ package firstOpenGLGame.main.java.renderer;
 import firstOpenGLGame.main.java.components.Sprite;
 import firstOpenGLGame.main.java.jade.Window;
 import firstOpenGLGame.main.java.util.ShaderUtils;
-import org.joml.Vector4f;
 
 import static firstOpenGLGame.main.java.util.ShaderUtils.uploadMatrix4f;
 import static firstOpenGLGame.main.java.util.VAOUtil.createVAO2;
@@ -85,6 +84,10 @@ public class RenderBatch {
 
         glUseProgram(0);
         glBindVertexArray(0);
+    }
+
+    public Sprite[] getSprites() {
+        return sprites;
     }
 
     public boolean hasRoom() {
