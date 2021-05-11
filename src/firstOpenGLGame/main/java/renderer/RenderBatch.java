@@ -2,6 +2,7 @@ package firstOpenGLGame.main.java.renderer;
 
 import firstOpenGLGame.main.java.components.Sprite;
 import firstOpenGLGame.main.java.jade.Window;
+import firstOpenGLGame.main.java.util.AssetPool;
 import firstOpenGLGame.main.java.util.ShaderUtils;
 
 import static firstOpenGLGame.main.java.util.ShaderUtils.uploadMatrix4f;
@@ -19,12 +20,12 @@ public class RenderBatch {
     private final float[] vertices;
     private int shaderID, vao, vbo;
 
-    public RenderBatch(int maxSpritesNum, String vertShaderPath, String fragShaderPath) {
+    public RenderBatch(int maxSpritesNum, String vertPath, String fragPath) {
         this.maxSpritesNum = maxSpritesNum;
         sprites = new Sprite[maxSpritesNum];
         spriteNum = 0;
         vertices = new float[maxSpritesNum * 4 * 6];
-        shaderID = ShaderUtils.load(vertShaderPath, fragShaderPath);
+        shaderID = AssetPool.getShaderID(vertPath, fragPath);
     }
 
     public void start() {

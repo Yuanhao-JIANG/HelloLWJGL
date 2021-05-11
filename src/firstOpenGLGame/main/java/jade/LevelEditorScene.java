@@ -2,6 +2,7 @@ package firstOpenGLGame.main.java.jade;
 
 import firstOpenGLGame.main.java.components.Sprite;
 import firstOpenGLGame.main.java.renderer.Renderer;
+import firstOpenGLGame.main.java.util.AssetPool;
 import org.joml.Vector2f;
 import org.joml.Vector4f;
 
@@ -33,6 +34,9 @@ public class LevelEditorScene extends Scene{
                 addGameObjectToScene(gameObject);
             }
         }
+
+        AssetPool.getShaderID("src/firstOpenGLGame/assets/shaders/vertex.glsl",
+                "src/firstOpenGLGame/assets/shaders/fragment.glsl");
     }
 
     @Override
