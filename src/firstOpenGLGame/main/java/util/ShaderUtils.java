@@ -63,8 +63,16 @@ public class ShaderUtils {
         glUniform1i(glGetUniformLocation(shaderProgram, textName), textUnitIndex);
     }
 
+    public static void setTextUnitArray(int shaderProgram, String textName, int[] textUnitIndexArray) {
+        glUniform1iv(glGetUniformLocation(shaderProgram, textName), textUnitIndexArray);
+    }
+
     public static void bindTexture(int textUnit, int textureID) {
         glActiveTexture(textUnit);
         glBindTexture(GL_TEXTURE_2D, textureID);
+    }
+
+    public static void unbindTexture() {
+        glBindTexture(GL_TEXTURE_2D, 0);
     }
 }

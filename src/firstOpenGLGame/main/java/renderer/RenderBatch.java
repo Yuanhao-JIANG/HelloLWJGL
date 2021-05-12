@@ -3,10 +3,12 @@ package firstOpenGLGame.main.java.renderer;
 import firstOpenGLGame.main.java.components.Sprite;
 import firstOpenGLGame.main.java.jade.Window;
 import firstOpenGLGame.main.java.util.AssetPool;
-import firstOpenGLGame.main.java.util.ShaderUtils;
 
-import static firstOpenGLGame.main.java.util.ShaderUtils.uploadMatrix4f;
-import static firstOpenGLGame.main.java.util.VAOUtil.createVAO2;
+import java.util.ArrayList;
+import java.util.List;
+
+import static firstOpenGLGame.main.java.util.ShaderUtils.*;
+import static firstOpenGLGame.main.java.util.VAOUtil.createVAO;
 import static firstOpenGLGame.main.java.util.VAOUtil.draw;
 import static firstOpenGLGame.main.java.util.VerticesUtil.generateIndices;
 import static org.lwjgl.opengl.GL15.*;
@@ -19,24 +21,32 @@ public class RenderBatch {
     private int spriteNum;
     private final float[] vertices;
     private int shaderID, vao, vbo;
+    private List<Integer> textureIDs;
+    private final int[] textUnitIndexArray = {0, 1, 2, 3, 4, 5, 6, 7};
 
     public RenderBatch(int maxSpritesNum, String vertPath, String fragPath) {
         this.maxSpritesNum = maxSpritesNum;
         sprites = new Sprite[maxSpritesNum];
         spriteNum = 0;
-        vertices = new float[maxSpritesNum * 4 * 6];
+        vertices = new float[maxSpritesNum * 4 * 9];
         shaderID = AssetPool.getShaderID(vertPath, fragPath);
+        textureIDs = new ArrayList<>();
     }
 
     public void start() {
         int[] indices = generateIndices(maxSpritesNum);
-        int[] objects = createVAO2(vertices, indices, GL_DYNAMIC_DRAW, GL_STATIC_DRAW);
+        int[] objects = createVAO(vertices, indices, GL_DYNAMIC_DRAW, GL_STATIC_DRAW);
         vao = objects[0];
         vbo = objects[1];
     }
 
     public void addSprite(Sprite sprite) {
         sprites[spriteNum] = sprite;
+
+        int textureID = sprite.getTextureID();
+        if (textureID != 0) {
+            if (!textureIDs.contains(textureID)) textureIDs.add(textureID);
+        }
 
         //update vertices array
         int yScaleIndicator;
@@ -50,21 +60,33 @@ public class RenderBatch {
                 yScaleIndicator = 0;
             } else if (i == 2) {
                 xScaleIndicator = 1;
-                yScaleIndicator = 1;
+                yScaleIndicator = -1;
             } else {
                 xScaleIndicator = 0;
-                yScaleIndicator = 1;
+                yScaleIndicator = -1;
             }
 
-            int offset = spriteNum * 4 * 6 + 6 * i;
+            int offset = spriteNum * 4 * 9 + 9 * i;
+            //position
             vertices[offset]     = sprite.gameObject.transform.position.x + xScaleIndicator *
                     sprite.gameObject.transform.scale.x;
             vertices[offset + 1] = sprite.gameObject.transform.position.y + yScaleIndicator *
                     sprite.gameObject.transform.scale.y;
+            //color
             vertices[offset + 2] = sprite.getColor().x;
             vertices[offset + 3] = sprite.getColor().y;
             vertices[offset + 4] = sprite.getColor().z;
             vertices[offset + 5] = sprite.getColor().w;
+            //texture coordinates
+            vertices[offset + 6] = sprite.getTexCoords()[i].x;
+            vertices[offset + 7] = sprite.getTexCoords()[i].y;
+            //texture id
+            vertices[offset + 8] = (float) textureID;
+            System.out.println(vertices[offset + 8]);
+            System.out.println(vertices[offset]);
+            System.out.println(vertices[offset + 1]);
+            System.out.println(vertices[offset + 6]);
+            System.out.println(vertices[offset + 7]);
         }
 
         spriteNum++;
@@ -80,11 +102,16 @@ public class RenderBatch {
                 Window.getCurrentScene().getCamera().getOrthoProjectionMatrix());
         uploadMatrix4f(shaderID, "uView",
                 Window.getCurrentScene().getCamera().getViewMatrix());
+        for (int i = 0; i < textureIDs.size(); i++) {
+            bindTexture(GL_TEXTURE0 + i, textureIDs.get(i));
+        }
+        setTextUnitArray(shaderID, "uTextures", textUnitIndexArray);
         glBindVertexArray(vao);
         draw(spriteNum * 6);
 
         glUseProgram(0);
         glBindVertexArray(0);
+        unbindTexture();
     }
 
     public Sprite[] getSprites() {

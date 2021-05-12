@@ -6,7 +6,7 @@ import static org.lwjgl.opengl.GL30.glBindVertexArray;
 import static org.lwjgl.opengl.GL30.glGenVertexArrays;
 
 public class VAOUtil {
-    public static int[] createVAO3(float[] vertexArray, int[] indices, int arrayBufferUsage,
+    public static int[] createVAO(float[] vertexArray, int[] indices, int arrayBufferUsage,
                                  int elementArrayBufferUsage) {
         int vao = glGenVertexArrays();
         int vbo = glGenBuffers(), ebo = glGenBuffers();
@@ -18,14 +18,17 @@ public class VAOUtil {
         glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ebo);
         glBufferData(GL_ELEMENT_ARRAY_BUFFER, indices, elementArrayBufferUsage);
 
-        glVertexAttribPointer(0, 3, GL_FLOAT, false, 9 * Float.BYTES, 0);
+        glVertexAttribPointer(0, 2, GL_FLOAT, false, 9 * Float.BYTES, 0);
         glEnableVertexAttribArray(0);
         glVertexAttribPointer(1, 4, GL_FLOAT, false, 9 * Float.BYTES,
-                3 * Float.BYTES);
+                2 * Float.BYTES);
         glEnableVertexAttribArray(1);
         glVertexAttribPointer(2, 2, GL_FLOAT, false, 9 * Float.BYTES,
-                7 * Float.BYTES);
+                6 * Float.BYTES);
         glEnableVertexAttribArray(2);
+        glVertexAttribPointer(3, 1, GL_FLOAT, false, 9 * Float.BYTES,
+                8 * Float.BYTES);
+        glEnableVertexAttribArray(3);
 
         glBindVertexArray(0);
         glBindBuffer(GL_ARRAY_BUFFER, 0);
@@ -33,6 +36,7 @@ public class VAOUtil {
         glDisableVertexAttribArray(0);
         glDisableVertexAttribArray(1);
         glDisableVertexAttribArray(2);
+        glDisableVertexAttribArray(3);
 
         objects[0] = vao;
         objects[1] = vbo;
