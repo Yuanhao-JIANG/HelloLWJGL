@@ -121,4 +121,12 @@ public class RenderBatch {
     public boolean hasRoom() {
         return spriteNum < maxSpritesNum;
     }
+
+    public boolean hasTextureRoom() {
+        return textureIDs.size() < 8;
+    }
+
+    public boolean hasTexture(int textureID) {
+        return textureIDs.contains(textureID);
+    }
 }

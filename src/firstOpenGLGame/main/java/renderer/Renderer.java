@@ -25,9 +25,12 @@ public class Renderer {
         boolean isAdded = false;
         for (RenderBatch batch : batches) {
             if (batch.hasRoom()) {
-                batch.addSprite(sprite);
-                isAdded = true;
-                break;
+                int textureID = sprite.getTextureID();
+                if (textureID == 0 || batch.hasTextureRoom() || batch.hasTexture(textureID)) {
+                    batch.addSprite(sprite);
+                    isAdded = true;
+                    break;
+                }
             }
         }
 
