@@ -93,9 +93,16 @@ public class RenderBatch {
     }
 
     public void render() {
-        //update vertices
-        glBindBuffer(GL_ARRAY_BUFFER, vbo);
-        glBufferSubData(GL_ARRAY_BUFFER, 0, vertices);
+        for (int i = 0; i < spriteNum; i++) {
+            if (sprites[i].isDirty()) {
+                loadSpriteToVertex(i);
+
+                //update vertices
+                glBindBuffer(GL_ARRAY_BUFFER, vbo);
+                glBufferSubData(GL_ARRAY_BUFFER, 0, vertices);
+                sprites[i].setClean();
+            }
+        }
 
         glUseProgram(shaderID);
         uploadMatrix4f(shaderID, "uProjection",

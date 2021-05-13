@@ -1,13 +1,18 @@
 package firstOpenGLGame.main.java.components;
 
 import firstOpenGLGame.main.java.jade.Component;
+import firstOpenGLGame.main.java.jade.Transform;
 import org.joml.Vector2f;
 import org.joml.Vector4f;
+
+import java.util.Arrays;
 
 public class Sprite extends Component {
     private Vector4f color;
     private int textureID;
     private Vector2f[] texCoords;
+    private Transform lastTransform;
+    private boolean isDirty = true;
 
     public Sprite(Vector4f color) {
         this.color = color;
@@ -32,22 +37,36 @@ public class Sprite extends Component {
 
     @Override
     public void start() {
+        lastTransform = gameObject.transform.copy();
     }
 
     @Override
     public void update(float dt) {
+        if (!lastTransform.equals(gameObject.transform)) {
+            gameObject.transform.copyTo(lastTransform);
+            isDirty = true;
+        }
     }
 
     public void setTexCoords(Vector2f[] texCoords) {
-        this.texCoords = texCoords;
+        if (!Arrays.equals(this.texCoords, texCoords)) {
+            this.texCoords = texCoords;
+            isDirty = true;
+        }
     }
 
     public void setTextureID(int textureID) {
-        this.textureID = textureID;
+        if (!(this.textureID == textureID)) {
+            this.textureID = textureID;
+            isDirty = true;
+        }
     }
 
     public void setColor(Vector4f color) {
-        this.color = color;
+        if (!this.color.equals(color)) {
+            this.color = color;
+            isDirty = true;
+        }
     }
 
     public Vector4f getColor() {
@@ -60,5 +79,13 @@ public class Sprite extends Component {
 
     public Vector2f[] getTexCoords() {
         return texCoords;
+    }
+
+    public boolean isDirty() {
+        return isDirty;
+    }
+
+    public void setClean() {
+        isDirty = false;
     }
 }

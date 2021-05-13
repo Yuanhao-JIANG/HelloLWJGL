@@ -6,6 +6,7 @@ import firstOpenGLGame.main.java.util.AssetPool;
 import org.joml.Vector2f;
 
 public class LevelEditorScene extends Scene{
+    private GameObject obj1;
     public LevelEditorScene() {}
 
     @Override
@@ -16,7 +17,7 @@ public class LevelEditorScene extends Scene{
         camera = new Camera();
         renderer = new Renderer();
 
-        GameObject obj1 = new GameObject("mario",
+        obj1 = new GameObject("mario",
                 new Transform(new Vector2f(100, 400), new Vector2f(256, 256)));
         obj1.addComponent(spriteSheet.getSprite(0));
         addGameObjectToScene(obj1);
@@ -37,6 +38,7 @@ public class LevelEditorScene extends Scene{
 
     @Override
     public void update(float dt) {
+        obj1.transform.position.x += 25 * dt;
         for (GameObject gameObject : gameObjects) {
             gameObject.update(dt);
         }
