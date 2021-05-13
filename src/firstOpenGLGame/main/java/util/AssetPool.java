@@ -1,10 +1,14 @@
 package firstOpenGLGame.main.java.util;
 
+import firstOpenGLGame.main.java.components.SpriteSheet;
+
 import java.util.HashMap;
+import java.util.Map;
 
 public class AssetPool {
-    private static final HashMap<String, Integer> shaderIDs = new HashMap<>();
-    private static final HashMap<String, Integer> textureIDs = new HashMap<>();
+    private static final Map<String, Integer> shaderIDs = new HashMap<>();
+    private static final Map<String, Integer[]> textureInfos = new HashMap<>();
+    private static final Map<String, SpriteSheet> spriteSheets = new HashMap<>();
 
     public static Integer getShaderID(String vertPath, String fragPath) {
         String key = vertPath + fragPath;
@@ -12,8 +16,19 @@ public class AssetPool {
         return shaderIDs.get(key);
     }
 
-    public static Integer getTextureID(String imagePath) {
-        if (!textureIDs.containsKey(imagePath)) textureIDs.put(imagePath, TextureUtil.genTextureID(imagePath));
-        return textureIDs.get(imagePath);
+    public static Integer[] getTextureInfo(String imagePath) {
+        if (!textureInfos.containsKey(imagePath)) textureInfos.put(imagePath, TextureUtil.genTextureID(imagePath));
+        return textureInfos.get(imagePath);
+    }
+
+    public static void addSpriteSheet(String spriteSheetPath, int spriteWidth,
+                                      int spriteHeight, int spriteNum, int spacingX, int spacingY) {
+        if (!spriteSheets.containsKey(spriteSheetPath)) spriteSheets.put(spriteSheetPath, new SpriteSheet(
+                getTextureInfo(spriteSheetPath), spriteWidth, spriteHeight, spriteNum, spacingX, spacingY));
+    }
+
+    public static SpriteSheet getSpriteSheet(String spriteSheetPath) {
+        assert spriteSheets.containsKey(spriteSheetPath) : "sprite sheet not added";
+        return spriteSheets.get(spriteSheetPath);
     }
 }

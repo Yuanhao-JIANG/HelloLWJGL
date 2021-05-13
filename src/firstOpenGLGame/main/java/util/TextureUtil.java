@@ -4,6 +4,7 @@ import org.lwjgl.BufferUtils;
 
 import java.nio.ByteBuffer;
 import java.nio.IntBuffer;
+import java.util.Arrays;
 
 import static org.lwjgl.opengl.GL11.*;
 import static org.lwjgl.opengl.GL30.glGenerateMipmap;
@@ -11,7 +12,8 @@ import static org.lwjgl.stb.STBImage.*;
 
 public class TextureUtil {
     private TextureUtil() {}
-    public static int genTextureID(String imagePath) {
+    public static Integer[] genTextureID(String imagePath) {
+        Integer[] results = new Integer[3];
         IntBuffer width = BufferUtils.createIntBuffer(1);
         IntBuffer height = BufferUtils.createIntBuffer(1);
         IntBuffer nrChannels = BufferUtils.createIntBuffer(1);
@@ -37,8 +39,12 @@ public class TextureUtil {
         }
         glGenerateMipmap(GL_TEXTURE_2D);
 
+        results[0] = textureID;
+        results[1] = width.get(0);
+        results[2] = height.get(0);
+
         glBindTexture(GL_TEXTURE_2D, 0);
         stbi_image_free(imageData);
-        return textureID;
+        return results;
     }
 }

@@ -7,12 +7,7 @@ import org.joml.Vector4f;
 public class Sprite extends Component {
     private final Vector4f color;
     private int textureID;
-    private final Vector2f[] texCoords = {
-            new Vector2f(0.0f, 1.0f),
-            new Vector2f(1.0f, 1.0f),
-            new Vector2f(1.0f, 0.0f),
-            new Vector2f(0.0f, 0.0f),
-    };
+    private Vector2f[] texCoords;
 
     public Sprite(Vector4f color) {
         this.color = color;
@@ -20,6 +15,18 @@ public class Sprite extends Component {
 
     public Sprite(int textureID) {
         this.textureID = textureID;
+        this.texCoords = new Vector2f[] {
+                new Vector2f(0.0f, 1.0f),
+                new Vector2f(1.0f, 1.0f),
+                new Vector2f(1.0f, 0.0f),
+                new Vector2f(0.0f, 0.0f)
+        };
+        this.color = new Vector4f(1.0f, 1.0f, 1.0f, 1.0f);
+    }
+
+    public Sprite(int textureID, Vector2f[] texCoords) {
+        this.textureID = textureID;
+        this.texCoords = texCoords;
         this.color = new Vector4f(1.0f, 1.0f, 1.0f, 1.0f);
     }
 

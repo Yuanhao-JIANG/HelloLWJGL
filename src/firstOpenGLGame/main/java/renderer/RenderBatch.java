@@ -82,11 +82,6 @@ public class RenderBatch {
             vertices[offset + 7] = sprite.getTexCoords()[i].y;
             //texture id
             vertices[offset + 8] = (float) textureID;
-            System.out.println(vertices[offset + 8]);
-            System.out.println(vertices[offset]);
-            System.out.println(vertices[offset + 1]);
-            System.out.println(vertices[offset + 6]);
-            System.out.println(vertices[offset + 7]);
         }
 
         spriteNum++;
