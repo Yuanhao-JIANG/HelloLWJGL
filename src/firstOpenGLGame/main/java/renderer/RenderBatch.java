@@ -48,7 +48,14 @@ public class RenderBatch {
             if (!textureIDs.contains(textureID)) textureIDs.add(textureID);
         }
 
-        //update vertices array
+        loadSpriteToVertex(spriteNum);
+
+        spriteNum++;
+    }
+
+    public void loadSpriteToVertex(int index) {
+        Sprite sprite = sprites[index];
+
         int yScaleIndicator;
         int xScaleIndicator;
         for (int i = 0; i < 4; i++) {
@@ -66,7 +73,7 @@ public class RenderBatch {
                 yScaleIndicator = -1;
             }
 
-            int offset = spriteNum * 4 * 9 + 9 * i;
+            int offset = index * 4 * 9 + 9 * i;
             //position
             vertices[offset]     = sprite.gameObject.transform.position.x + xScaleIndicator *
                     sprite.gameObject.transform.scale.x;
@@ -81,10 +88,8 @@ public class RenderBatch {
             vertices[offset + 6] = sprite.getTexCoords()[i].x;
             vertices[offset + 7] = sprite.getTexCoords()[i].y;
             //texture id
-            vertices[offset + 8] = (float) textureID;
+            vertices[offset + 8] = (float) sprite.getTextureID();
         }
-
-        spriteNum++;
     }
 
     public void render() {

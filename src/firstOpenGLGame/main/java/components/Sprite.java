@@ -5,7 +5,7 @@ import org.joml.Vector2f;
 import org.joml.Vector4f;
 
 public class Sprite extends Component {
-    private final Vector4f color;
+    private Vector4f color;
     private int textureID;
     private Vector2f[] texCoords;
 
@@ -36,6 +36,18 @@ public class Sprite extends Component {
 
     @Override
     public void update(float dt) {
+    }
+
+    public void setTexCoords(Vector2f[] texCoords) {
+        this.texCoords = texCoords;
+    }
+
+    public void setTextureID(int textureID) {
+        this.textureID = textureID;
+    }
+
+    public void setColor(Vector4f color) {
+        this.color = color;
     }
 
     public Vector4f getColor() {
