@@ -35,6 +35,13 @@ public class Sprite extends Component {
         this.color = new Vector4f(1.0f, 1.0f, 1.0f, 1.0f);
     }
 
+    public Sprite(Sprite sprite) {
+        this.textureID = sprite.getTextureID();
+        this.texCoords = sprite.getTexCoords();
+        this.color = sprite.getColor();
+        this.isDirty = sprite.isDirty();
+    }
+
     @Override
     public void start() {
         lastTransform = gameObject.transform.copy();
@@ -46,6 +53,12 @@ public class Sprite extends Component {
             gameObject.transform.copyTo(lastTransform);
             isDirty = true;
         }
+    }
+
+    public void reset(Sprite sprite) {
+        setTexCoords(sprite.getTexCoords());
+        setTextureID(sprite.getTextureID());
+        setColor(sprite.getColor());
     }
 
     public void setTexCoords(Vector2f[] texCoords) {

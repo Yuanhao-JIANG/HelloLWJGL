@@ -1,30 +1,35 @@
 package firstOpenGLGame.main.java.jade;
 
+import firstOpenGLGame.main.java.components.Sprite;
 import firstOpenGLGame.main.java.components.SpriteSheet;
 import firstOpenGLGame.main.java.renderer.Renderer;
 import firstOpenGLGame.main.java.util.AssetPool;
 import org.joml.Vector2f;
 
+import java.util.Arrays;
+
 public class LevelEditorScene extends Scene{
     private GameObject obj1;
+    private GameObject obj2;
+    private SpriteSheet spriteSheet;
     public LevelEditorScene() {}
 
     @Override
     public void init() {
         loadResources();
-        SpriteSheet spriteSheet = AssetPool.getSpriteSheet("src/firstOpenGLGame/assets/images/spriteSheet.png");
+        spriteSheet = AssetPool.getSpriteSheet("src/firstOpenGLGame/assets/images/spriteSheet.png");
 
         camera = new Camera();
         renderer = new Renderer();
 
         obj1 = new GameObject("mario",
                 new Transform(new Vector2f(100, 400), new Vector2f(256, 256)));
-        obj1.addComponent(spriteSheet.getSprite(0));
+        obj1.addComponent(new Sprite(spriteSheet.getSprite(1)));
         addGameObjectToScene(obj1);
 
-        GameObject obj2 = new GameObject("goomba",
+        obj2 = new GameObject("goomba",
                 new Transform(new Vector2f(400, 400), new Vector2f(256, 256)));
-        obj2.addComponent(spriteSheet.getSprite(1));
+        obj2.addComponent(new Sprite(spriteSheet.getSprite(14)));
         addGameObjectToScene(obj2);
     }
 
@@ -36,9 +41,27 @@ public class LevelEditorScene extends Scene{
                 16, 26, 0, 0);
     }
 
+    private int spriteIndex1 = 1;
+    private int spriteIndex2 = 14;
+    private float spriteFlipTimeLeft = 0.0f;
     @Override
     public void update(float dt) {
-        obj1.transform.position.x += 25 * dt;
+        spriteFlipTimeLeft -= dt;
+        if (spriteFlipTimeLeft < 0) {
+            spriteFlipTimeLeft = 0.2f;
+            spriteIndex1 ++;
+            spriteIndex2 ++;
+            if (spriteIndex1 > 3) {
+                spriteIndex1 = 1;
+            }
+            if (spriteIndex2 > 15) {
+                spriteIndex2 = 14;
+            }
+            obj1.getComponent(Sprite.class).reset(spriteSheet.getSprite(spriteIndex1));
+            obj2.getComponent(Sprite.class).reset(spriteSheet.getSprite(spriteIndex2));
+        }
+        obj1.transform.position.x += 150 * dt;
+        obj2.transform.position.x += 150 * dt;
         for (GameObject gameObject : gameObjects) {
             gameObject.update(dt);
         }
