@@ -5,8 +5,7 @@ import firstOpenGLGame.main.java.components.SpriteSheet;
 import firstOpenGLGame.main.java.renderer.Renderer;
 import firstOpenGLGame.main.java.util.AssetPool;
 import org.joml.Vector2f;
-
-import java.util.Arrays;
+import org.joml.Vector3f;
 
 public class LevelEditorScene extends Scene{
     private GameObject obj1;
@@ -23,12 +22,12 @@ public class LevelEditorScene extends Scene{
         renderer = new Renderer();
 
         obj1 = new GameObject("mario",
-                new Transform(new Vector2f(100, 400), new Vector2f(256, 256)));
+                new Transform(new Vector3f(100, 400, 0), new Vector2f(256, 256)));
         obj1.addComponent(new Sprite(spriteSheet.getSprite(1)));
         addGameObjectToScene(obj1);
 
         obj2 = new GameObject("goomba",
-                new Transform(new Vector2f(400, 400), new Vector2f(256, 256)));
+                new Transform(new Vector3f(400, 400, 0), new Vector2f(256, 256)));
         obj2.addComponent(new Sprite(spriteSheet.getSprite(14)));
         addGameObjectToScene(obj2);
     }
@@ -61,7 +60,7 @@ public class LevelEditorScene extends Scene{
             obj2.getComponent(Sprite.class).reset(spriteSheet.getSprite(spriteIndex2));
         }
         obj1.transform.position.x += 150 * dt;
-        obj2.transform.position.x += 150 * dt;
+        //obj2.transform.position.x += 150 * dt;
         for (GameObject gameObject : gameObjects) {
             gameObject.update(dt);
         }

@@ -73,22 +73,23 @@ public class RenderBatch {
                 yScaleIndicator = -1;
             }
 
-            int offset = index * 4 * 9 + 9 * i;
+            int offset = index * 4 * 10 + 10 * i;
             //position
             vertices[offset]     = sprite.gameObject.transform.position.x + xScaleIndicator *
                     sprite.gameObject.transform.scale.x;
             vertices[offset + 1] = sprite.gameObject.transform.position.y + yScaleIndicator *
                     sprite.gameObject.transform.scale.y;
+            vertices[offset + 2] = sprite.gameObject.transform.position.z;
             //color
-            vertices[offset + 2] = sprite.getColor().x;
-            vertices[offset + 3] = sprite.getColor().y;
-            vertices[offset + 4] = sprite.getColor().z;
-            vertices[offset + 5] = sprite.getColor().w;
+            vertices[offset + 3] = sprite.getColor().x;
+            vertices[offset + 4] = sprite.getColor().y;
+            vertices[offset + 5] = sprite.getColor().z;
+            vertices[offset + 6] = sprite.getColor().w;
             //texture coordinates
-            vertices[offset + 6] = sprite.getTexCoords()[i].x;
-            vertices[offset + 7] = sprite.getTexCoords()[i].y;
+            vertices[offset + 7] = sprite.getTexCoords()[i].x;
+            vertices[offset + 8] = sprite.getTexCoords()[i].y;
             //texture id
-            vertices[offset + 8] = (float) sprite.getTextureID();
+            vertices[offset + 9] = (float) sprite.getTextureID();
         }
     }
 

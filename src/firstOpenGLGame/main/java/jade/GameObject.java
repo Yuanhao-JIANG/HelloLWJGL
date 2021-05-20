@@ -1,5 +1,8 @@
 package firstOpenGLGame.main.java.jade;
 
+import org.joml.Vector2f;
+import org.joml.Vector3f;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -18,6 +21,12 @@ public class GameObject {
         this.name = name;
         components = new ArrayList<>();
         this.transform = transform;
+    }
+
+    public GameObject(String name, float posX, float posY, float z, float width, float height) {
+        this.name = name;
+        components = new ArrayList<>();
+        this.transform = new Transform(new Vector3f(posX, posY, z), new Vector2f(width, height));
     }
 
     public <T extends Component> T getComponent(Class<T> componentClass) {

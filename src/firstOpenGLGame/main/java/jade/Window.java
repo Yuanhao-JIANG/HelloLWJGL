@@ -95,6 +95,7 @@ public class Window {
         glfwSwapInterval(1);
         glfwShowWindow(glfwWindow); // set to visible after window is fully created
         createCapabilities(); // must have
+        glEnable(GL_DEPTH_TEST); // must be after createCapabilities()
         setCallbacks();
 
         changeScene(0);
@@ -118,7 +119,7 @@ public class Window {
 
             glfwPollEvents();
             glClearColor(clearColorR, clearColorG, clearColorB, clearColorA);
-            glClear(GL_COLOR_BUFFER_BIT);
+            glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
             currentScene.update(deltaTime);
 
             glfwSwapBuffers(glfwWindow);

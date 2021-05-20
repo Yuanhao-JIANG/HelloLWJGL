@@ -1,26 +1,27 @@
 package firstOpenGLGame.main.java.jade;
 
 import org.joml.Vector2f;
+import org.joml.Vector3f;
 
 public class Transform {
-    public Vector2f position;
+    public Vector3f position;
     public Vector2f scale;
 
     public Transform() {
-        init(new Vector2f(), new Vector2f());
+        init(new Vector3f(), new Vector2f());
     }
 
-    public Transform(Vector2f position, Vector2f scale) {
+    public Transform(Vector3f position, Vector2f scale) {
         init(position, scale);
     }
 
-    private void init(Vector2f position, Vector2f scale) {
+    private void init(Vector3f position, Vector2f scale) {
         this.position = position;
         this.scale = scale;
     }
 
     public Transform copy() {
-        return new Transform(new Vector2f(this.position), new Vector2f(this.scale));
+        return new Transform(new Vector3f(this.position), new Vector2f(this.scale));
     }
 
     public void copyTo(Transform dest) {

@@ -18,16 +18,16 @@ public class VAOUtil {
         glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ebo);
         glBufferData(GL_ELEMENT_ARRAY_BUFFER, indices, elementArrayBufferUsage);
 
-        glVertexAttribPointer(0, 2, GL_FLOAT, false, 9 * Float.BYTES, 0);
+        glVertexAttribPointer(0, 3, GL_FLOAT, false, 10 * Float.BYTES, 0);
         glEnableVertexAttribArray(0);
-        glVertexAttribPointer(1, 4, GL_FLOAT, false, 9 * Float.BYTES,
-                2 * Float.BYTES);
+        glVertexAttribPointer(1, 4, GL_FLOAT, false, 10 * Float.BYTES,
+                3 * Float.BYTES);
         glEnableVertexAttribArray(1);
-        glVertexAttribPointer(2, 2, GL_FLOAT, false, 9 * Float.BYTES,
-                6 * Float.BYTES);
+        glVertexAttribPointer(2, 2, GL_FLOAT, false, 10 * Float.BYTES,
+                7 * Float.BYTES);
         glEnableVertexAttribArray(2);
-        glVertexAttribPointer(3, 1, GL_FLOAT, false, 9 * Float.BYTES,
-                8 * Float.BYTES);
+        glVertexAttribPointer(3, 1, GL_FLOAT, false, 10 * Float.BYTES,
+                9 * Float.BYTES);
         glEnableVertexAttribArray(3);
 
         glBindVertexArray(0);
