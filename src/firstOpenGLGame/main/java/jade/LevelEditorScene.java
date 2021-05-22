@@ -27,7 +27,7 @@ public class LevelEditorScene extends Scene{
         addGameObjectToScene(obj1);
 
         obj2 = new GameObject("goomba",
-                new Transform(new Vector3f(400, 400, 0), new Vector2f(256, 256)));
+                new Transform(new Vector3f(400, 400, -1), new Vector2f(256, 256)));
         obj2.addComponent(new Sprite(spriteSheet.getSprite(14)));
         addGameObjectToScene(obj2);
     }

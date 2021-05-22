@@ -12,7 +12,11 @@ void main() {
     //color = fColor * noise;
     int texUnitIndex = int(fTexID) - 1;
     if (int(fTexID) != 0) {
-        color = fColor * texture(uTextures[texUnitIndex], fTexCoord);
+        vec4 texel = fColor * texture(uTextures[texUnitIndex], fTexCoord);
+        if(texel.a < 0.5) {
+            discard;
+        }
+        color = texel;
         //color = vec4(fTexCoord ,0,1);
     } else {
         color = fColor;
