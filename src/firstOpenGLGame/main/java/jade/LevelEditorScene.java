@@ -10,6 +10,8 @@ import org.joml.Vector3f;
 public class LevelEditorScene extends Scene{
     private GameObject obj1;
     private GameObject obj2;
+    private GameObject obj3;
+    private GameObject obj4;
     private SpriteSheet spriteSheet;
     public LevelEditorScene() {}
 
@@ -30,6 +32,16 @@ public class LevelEditorScene extends Scene{
                 new Transform(new Vector3f(400, 400, -1), new Vector2f(256, 256)));
         obj2.addComponent(new Sprite(spriteSheet.getSprite(14)));
         addGameObjectToScene(obj2);
+
+        obj3 = new GameObject("greenSquare",
+                new Transform(new Vector3f(300, 520, 1), new Vector2f(100, 100)));
+        obj3.addComponent(new Sprite(AssetPool.getTextureInfo("src/firstOpenGLGame/assets/images/greenSquare.png")[0]));
+        addGameObjectToScene(obj3);
+
+        obj4 = new GameObject("redSquare",
+                new Transform(new Vector3f(350, 520, 0), new Vector2f(100, 100)));
+        obj4.addComponent(new Sprite(AssetPool.getTextureInfo("src/firstOpenGLGame/assets/images/redSquare.png")[0]));
+        addGameObjectToScene(obj4);
     }
 
     public void loadResources() {
@@ -59,7 +71,7 @@ public class LevelEditorScene extends Scene{
             obj1.getComponent(Sprite.class).reset(spriteSheet.getSprite(spriteIndex1));
             obj2.getComponent(Sprite.class).reset(spriteSheet.getSprite(spriteIndex2));
         }
-        obj1.transform.position.x += 150 * dt;
+        //obj1.transform.position.x += 150 * dt;
         //obj2.transform.position.x += 150 * dt;
         for (GameObject gameObject : gameObjects) {
             gameObject.update(dt);
