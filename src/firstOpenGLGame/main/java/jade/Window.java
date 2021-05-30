@@ -22,6 +22,8 @@ public class Window {
     private long glfwWindow;
     private static Scene currentScene;
 
+    private ImGuiLayer imGuiLayer;
+
     private Window(int width, int height, String title, float r, float g, float b, float a) {
         this.width = width;
         this.height = height;
@@ -98,6 +100,9 @@ public class Window {
         glEnable(GL_DEPTH_TEST); // must be after createCapabilities()
         setCallbacks();
 
+        imGuiLayer = new ImGuiLayer(glfwWindow);
+        imGuiLayer.initImGui();
+
         changeScene(0);
     }
 
@@ -122,7 +127,17 @@ public class Window {
             glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
             currentScene.update(deltaTime);
 
+            imGuiLayer.update(deltaTime);
+
             glfwSwapBuffers(glfwWindow);
         }
+    }
+
+    public static int getWidth() {
+        return window.width;
+    }
+
+    public static int getHeight() {
+        return window.height;
     }
 }

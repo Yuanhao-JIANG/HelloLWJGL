@@ -8,10 +8,10 @@ import org.joml.Vector2f;
 import org.joml.Vector3f;
 
 public class LevelEditorScene extends Scene{
+    private GameObject obj0;
     private GameObject obj1;
     private GameObject obj2;
     private GameObject obj3;
-    private GameObject obj4;
     private SpriteSheet spriteSheet;
     public LevelEditorScene() {}
 
@@ -23,25 +23,25 @@ public class LevelEditorScene extends Scene{
         camera = new Camera();
         renderer = new Renderer();
 
-        obj1 = new GameObject("mario",
+        obj0 = new GameObject("mario",
                 new Transform(new Vector3f(100, 400, 0), new Vector2f(256, 256)));
-        obj1.addComponent(new Sprite(spriteSheet.getSprite(1)));
+        obj0.addComponent(new Sprite(spriteSheet.getSprite(1)));
+        addGameObjectToScene(obj0);
+
+        obj1 = new GameObject("goomba",
+                new Transform(new Vector3f(400, 400, -1), new Vector2f(256, 256)));
+        obj1.addComponent(new Sprite(spriteSheet.getSprite(14)));
         addGameObjectToScene(obj1);
 
-        obj2 = new GameObject("goomba",
-                new Transform(new Vector3f(400, 400, -1), new Vector2f(256, 256)));
-        obj2.addComponent(new Sprite(spriteSheet.getSprite(14)));
+        obj2 = new GameObject("greenSquare",
+                new Transform(new Vector3f(300, 520, 0), new Vector2f(100, 100)));
+        obj2.addComponent(new Sprite(AssetPool.getTextureInfo("src/firstOpenGLGame/assets/images/greenSquare.png")[0]));
         addGameObjectToScene(obj2);
 
-        obj3 = new GameObject("greenSquare",
-                new Transform(new Vector3f(300, 520, 1), new Vector2f(100, 100)));
-        obj3.addComponent(new Sprite(AssetPool.getTextureInfo("src/firstOpenGLGame/assets/images/greenSquare.png")[0]));
+        obj3 = new GameObject("redSquare",
+                new Transform(new Vector3f(350, 520, 1), new Vector2f(100, 100)));
+        obj3.addComponent(new Sprite(AssetPool.getTextureInfo("src/firstOpenGLGame/assets/images/redSquare.png")[0]));
         addGameObjectToScene(obj3);
-
-        obj4 = new GameObject("redSquare",
-                new Transform(new Vector3f(350, 520, 0), new Vector2f(100, 100)));
-        obj4.addComponent(new Sprite(AssetPool.getTextureInfo("src/firstOpenGLGame/assets/images/redSquare.png")[0]));
-        addGameObjectToScene(obj4);
     }
 
     public void loadResources() {
@@ -68,11 +68,11 @@ public class LevelEditorScene extends Scene{
             if (spriteIndex2 > 15) {
                 spriteIndex2 = 14;
             }
-            obj1.getComponent(Sprite.class).reset(spriteSheet.getSprite(spriteIndex1));
-            obj2.getComponent(Sprite.class).reset(spriteSheet.getSprite(spriteIndex2));
+            obj0.getComponent(Sprite.class).reset(spriteSheet.getSprite(spriteIndex1));
+            obj1.getComponent(Sprite.class).reset(spriteSheet.getSprite(spriteIndex2));
         }
+        //obj0.transform.position.x += 150 * dt;
         //obj1.transform.position.x += 150 * dt;
-        //obj2.transform.position.x += 150 * dt;
         for (GameObject gameObject : gameObjects) {
             gameObject.update(dt);
         }
