@@ -9,8 +9,14 @@ import java.util.Arrays;
 
 public class Sprite extends Component {
     private Vector4f color;
+    // the default textureID is 0 so that if it is 0 then there is no texture bind to this sprite
     private int textureID;
-    private Vector2f[] texCoords;
+    private Vector2f[] texCoords = new Vector2f[] {
+            new Vector2f(0.0f, 1.0f),
+            new Vector2f(1.0f, 1.0f),
+            new Vector2f(1.0f, 0.0f),
+            new Vector2f(0.0f, 0.0f)
+    };
     private Transform lastTransform;
     private boolean isDirty = true;
 

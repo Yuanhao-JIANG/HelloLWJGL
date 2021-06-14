@@ -158,7 +158,7 @@ public class ImGuiLayer {
         fontConfig.setPixelSnapH(true);
 
 //        fontAtlas.addFontFromMemoryTTF(loadFromResources("basis33.ttf"), 16, fontConfig);
-        fontAtlas.addFontFromFileTTF("src/firstOpenGLGame/assets/fonts/SansSerif.ttf", 21, fontConfig);
+        fontAtlas.addFontFromFileTTF("src/firstOpenGLGame/assets/fonts/SansSerif.ttf", 18, fontConfig);
 
         fontConfig.destroy(); // After all fonts were added we don't need this config more
 
