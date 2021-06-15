@@ -4,6 +4,7 @@ import firstOpenGLGame.main.java.components.Sprite;
 import firstOpenGLGame.main.java.components.SpriteSheet;
 import firstOpenGLGame.main.java.renderer.Renderer;
 import firstOpenGLGame.main.java.util.AssetPool;
+import imgui.ImGui;
 import org.joml.Vector2f;
 import org.joml.Vector3f;
 
@@ -78,5 +79,12 @@ public class LevelEditorScene extends Scene{
         }
 
         renderer.render();
+    }
+
+    @Override
+    public void imGui() {
+        ImGui.begin("Test window");
+        ImGui.text("Testing, testing.");
+        ImGui.end();
     }
 }

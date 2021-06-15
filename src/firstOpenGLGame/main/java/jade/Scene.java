@@ -1,6 +1,7 @@
 package firstOpenGLGame.main.java.jade;
 
 import firstOpenGLGame.main.java.renderer.Renderer;
+import imgui.ImGui;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -10,6 +11,7 @@ public abstract class Scene {
     protected final List<GameObject> gameObjects = new ArrayList<>();
     protected Camera camera;
     protected Renderer renderer;
+    protected GameObject activeGameObject = null;
     public Scene() {
 
     }
@@ -37,4 +39,16 @@ public abstract class Scene {
     }
 
     public abstract void update(float dt);
+
+    public void sceneImGUI() {
+        if (activeGameObject != null) {
+            ImGui.begin("Inspector");
+            activeGameObject.imGui();
+            ImGui.end();
+        }
+
+        imGui();
+    }
+
+    public void imGui() {}
 }
