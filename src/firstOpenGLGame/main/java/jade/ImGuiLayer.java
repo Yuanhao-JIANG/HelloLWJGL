@@ -103,7 +103,8 @@ public class ImGuiLayer {
             }
         });
 
-        glfwSetMouseButtonCallback(windowPtr, (w, button, action, mods) -> {
+        //implemented in Input.java
+        /*glfwSetMouseButtonCallback(windowPtr, (w, button, action, mods) -> {
             final boolean[] mouseDown = new boolean[5];
 
             mouseDown[0] = button == GLFW_MOUSE_BUTTON_1 && action != GLFW_RELEASE;
@@ -117,12 +118,13 @@ public class ImGuiLayer {
             if (!io.getWantCaptureMouse() && mouseDown[1]) {
                 ImGui.setWindowFocus(null);
             }
-        });
+        });*/
 
-        glfwSetScrollCallback(windowPtr, (w, xOffset, yOffset) -> {
+        //implemented in Input.java
+        /*glfwSetScrollCallback(windowPtr, (w, xOffset, yOffset) -> {
             io.setMouseWheelH(io.getMouseWheelH() + (float) xOffset);
             io.setMouseWheel(io.getMouseWheel() + (float) yOffset);
-        });
+        });*/
 
         io.setSetClipboardTextFn(new ImStrConsumer() {
             @Override

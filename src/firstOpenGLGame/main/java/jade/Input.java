@@ -1,5 +1,7 @@
 package firstOpenGLGame.main.java.jade;
 
+import imgui.ImGui;
+import imgui.ImGuiIO;
 import org.lwjgl.glfw.GLFWCursorPosCallback;
 import org.lwjgl.glfw.GLFWKeyCallback;
 import org.lwjgl.glfw.GLFWMouseButtonCallback;
@@ -24,6 +26,11 @@ public class Input {
         @Override
         public void invoke(long window, int button, int action, int mods) {
             mouseButtonStatus[button] = action != GLFW_RELEASE;
+
+            //ImGui configuration
+            final ImGuiIO io = ImGui.getIO();
+            io.setMouseDown(button, action != GLFW_RELEASE);
+            if (!io.getWantCaptureMouse() && mouseButtonStatus[GLFW_MOUSE_BUTTON_2]) ImGui.setWindowFocus(null);
         }
     };
     private static final GLFWCursorPosCallback cursorPosCallback = new GLFWCursorPosCallback() {
@@ -38,6 +45,11 @@ public class Input {
         public void invoke(long window, double xoffset, double yoffset) {
             scrollXOffset = (float) xoffset;
             scrollYOffset = (float) yoffset;
+
+            //ImGui configuration
+            final ImGuiIO io = ImGui.getIO();
+            io.setMouseWheelH(io.getMouseWheelH() + (float) xoffset);
+            io.setMouseWheel(io.getMouseWheel() + (float) yoffset);
         }
     };
 
