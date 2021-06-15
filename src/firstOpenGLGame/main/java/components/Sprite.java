@@ -2,6 +2,7 @@ package firstOpenGLGame.main.java.components;
 
 import firstOpenGLGame.main.java.jade.Component;
 import firstOpenGLGame.main.java.jade.Transform;
+import imgui.ImGui;
 import org.joml.Vector2f;
 import org.joml.Vector4f;
 
@@ -46,6 +47,7 @@ public class Sprite extends Component {
         this.texCoords = sprite.getTexCoords();
         this.color = sprite.getColor();
         this.isDirty = sprite.isDirty();
+        this.lastTransform = sprite.lastTransform;
     }
 
     @Override
@@ -57,6 +59,15 @@ public class Sprite extends Component {
     public void update(float dt) {
         if (!lastTransform.equals(gameObject.transform)) {
             gameObject.transform.copyTo(lastTransform);
+            isDirty = true;
+        }
+    }
+
+    @Override
+    public void imGui() {
+        float[] imGuiColor = {color.x, color.y, color.z, color.w};
+        if (ImGui.colorPicker4("Color Picker", imGuiColor)) {
+            color.set(imGuiColor[0], imGuiColor[1], imGuiColor[2], imGuiColor[3]);
             isDirty = true;
         }
     }

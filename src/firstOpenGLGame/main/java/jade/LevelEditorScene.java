@@ -43,6 +43,8 @@ public class LevelEditorScene extends Scene{
                 new Transform(new Vector3f(350, 520, 1), new Vector2f(100, 100)));
         obj3.addComponent(new Sprite(AssetPool.getTextureInfo("src/firstOpenGLGame/assets/images/redSquare.png")[0]));
         addGameObjectToScene(obj3);
+
+        activeGameObject = obj2;
     }
 
     public void loadResources() {
