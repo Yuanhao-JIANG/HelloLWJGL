@@ -185,10 +185,10 @@ public class ImGuiLayer {
     private void startFrame(final float deltaTime) {
         double[] mousePosX = {0};
         double[] mousePosY = {0};
-        int[] winWidth = {Window.getWidth()};
-        int[] winHeight = {Window.getHeight()};
-        int[] fbWidth = winWidth;
-        int[] fbHeight = winHeight;
+        int[] winWidth = new int[1];
+        int[] winHeight = new int[1];
+        int[] fbWidth = new int[1];
+        int[] fbHeight = new int[1];
 
         // Get window properties and mouse position
         glfwGetWindowSize(windowPtr, winWidth, winHeight);
