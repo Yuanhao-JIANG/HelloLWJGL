@@ -98,10 +98,11 @@ public class Window {
         glfwShowWindow(glfwWindow); // set to visible after window is fully created
         createCapabilities(); // must have
         glEnable(GL_DEPTH_TEST); // must be after createCapabilities()
-        setCallbacks();
 
         imGuiLayer = new ImGuiLayer(glfwWindow);
         imGuiLayer.initImGui();
+
+        setCallbacks();
 
         changeScene(0);
     }
@@ -111,6 +112,7 @@ public class Window {
         GLFW.glfwSetMouseButtonCallback(glfwWindow, getMouseButtonCallback());
         GLFW.glfwSetCursorPosCallback(glfwWindow, getCursorPosCallback());
         GLFW.glfwSetScrollCallback(glfwWindow, getScrollCallback());
+        GLFW.glfwSetCharCallback(glfwWindow, getCharCallback());
     }
 
     public void loop() {

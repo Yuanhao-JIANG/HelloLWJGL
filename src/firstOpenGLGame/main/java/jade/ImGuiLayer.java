@@ -61,12 +61,12 @@ public class ImGuiLayer {
         keyMap[ImGuiKey.Enter] = GLFW_KEY_ENTER;
         keyMap[ImGuiKey.Escape] = GLFW_KEY_ESCAPE;
         keyMap[ImGuiKey.KeyPadEnter] = GLFW_KEY_KP_ENTER;
-        keyMap[ImGuiKey.A] = GLFW_KEY_A;
-        keyMap[ImGuiKey.C] = GLFW_KEY_C;
-        keyMap[ImGuiKey.V] = GLFW_KEY_V;
-        keyMap[ImGuiKey.X] = GLFW_KEY_X;
-        keyMap[ImGuiKey.Y] = GLFW_KEY_Y;
-        keyMap[ImGuiKey.Z] = GLFW_KEY_Z;
+        keyMap[ImGuiKey.A] = GLFW_KEY_A;    //for text edit CTRL+A: select all
+        keyMap[ImGuiKey.C] = GLFW_KEY_C;    //for text edit CTRL+C: copy
+        keyMap[ImGuiKey.V] = GLFW_KEY_V;    //for text edit CTRL+V: paste
+        keyMap[ImGuiKey.X] = GLFW_KEY_X;    //for text edit CTRL+X: cut
+        keyMap[ImGuiKey.Y] = GLFW_KEY_Y;    //for text edit CTRL+Y: redo
+        keyMap[ImGuiKey.Z] = GLFW_KEY_Z;    //for text edit CTRL+Z: undo
         io.setKeyMap(keyMap);
 
         // ------------------------------------------------------------
@@ -83,8 +83,8 @@ public class ImGuiLayer {
 
         // ------------------------------------------------------------
         // GLFW callbacks to handle user input
-
-        glfwSetKeyCallback(windowPtr, (w, key, scancode, action, mods) -> {
+        //implemented in Input.java
+        /*glfwSetKeyCallback(windowPtr, (w, key, scancode, action, mods) -> {
             if (action == GLFW_PRESS) {
                 io.setKeysDown(key, true);
             } else if (action == GLFW_RELEASE) {
@@ -103,8 +103,7 @@ public class ImGuiLayer {
             }
         });
 
-        //implemented in Input.java
-        /*glfwSetMouseButtonCallback(windowPtr, (w, button, action, mods) -> {
+        glfwSetMouseButtonCallback(windowPtr, (w, button, action, mods) -> {
             final boolean[] mouseDown = new boolean[5];
 
             mouseDown[0] = button == GLFW_MOUSE_BUTTON_1 && action != GLFW_RELEASE;
@@ -118,10 +117,9 @@ public class ImGuiLayer {
             if (!io.getWantCaptureMouse() && mouseDown[1]) {
                 ImGui.setWindowFocus(null);
             }
-        });*/
+        });
 
-        //implemented in Input.java
-        /*glfwSetScrollCallback(windowPtr, (w, xOffset, yOffset) -> {
+        glfwSetScrollCallback(windowPtr, (w, xOffset, yOffset) -> {
             io.setMouseWheelH(io.getMouseWheelH() + (float) xOffset);
             io.setMouseWheel(io.getMouseWheel() + (float) yOffset);
         });*/

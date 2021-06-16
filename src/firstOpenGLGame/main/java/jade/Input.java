@@ -2,13 +2,12 @@ package firstOpenGLGame.main.java.jade;
 
 import imgui.ImGui;
 import imgui.ImGuiIO;
-import org.lwjgl.glfw.GLFWCursorPosCallback;
-import org.lwjgl.glfw.GLFWKeyCallback;
-import org.lwjgl.glfw.GLFWMouseButtonCallback;
-import org.lwjgl.glfw.GLFWScrollCallback;
+import org.lwjgl.glfw.*;
 
 import static org.lwjgl.glfw.GLFW.*;
 
+//General and ImGui keyboard, mouse, cursor IO
+//Other ImGui IO are inside ImGuiLayer.java
 public class Input {
     private static final boolean[] keyStatus = new boolean[GLFW_KEY_LAST];
     private static final boolean[] mouseButtonStatus = new boolean[GLFW_MOUSE_BUTTON_LAST];
@@ -20,6 +19,15 @@ public class Input {
         @Override
         public void invoke(long window, int key, int scancode, int action, int mods) {
             keyStatus[key] = action != GLFW_RELEASE;
+
+            //ImGui configuration
+            final ImGuiIO io = ImGui.getIO();
+            io.setKeysDown(key, action != GLFW_RELEASE);
+
+            io.setKeyCtrl(io.getKeysDown(GLFW_KEY_LEFT_CONTROL) || io.getKeysDown(GLFW_KEY_RIGHT_CONTROL));
+            io.setKeyShift(io.getKeysDown(GLFW_KEY_LEFT_SHIFT) || io.getKeysDown(GLFW_KEY_RIGHT_SHIFT));
+            io.setKeyAlt(io.getKeysDown(GLFW_KEY_LEFT_ALT) || io.getKeysDown(GLFW_KEY_RIGHT_ALT));
+            io.setKeySuper(io.getKeysDown(GLFW_KEY_LEFT_SUPER) || io.getKeysDown(GLFW_KEY_RIGHT_SUPER));
         }
     };
     private static final GLFWMouseButtonCallback mouseButtonCallback = new GLFWMouseButtonCallback() {
@@ -30,7 +38,6 @@ public class Input {
             //ImGui configuration
             final ImGuiIO io = ImGui.getIO();
             io.setMouseDown(button, action != GLFW_RELEASE);
-            if (!io.getWantCaptureMouse() && mouseButtonStatus[GLFW_MOUSE_BUTTON_2]) ImGui.setWindowFocus(null);
         }
     };
     private static final GLFWCursorPosCallback cursorPosCallback = new GLFWCursorPosCallback() {
@@ -50,6 +57,13 @@ public class Input {
             final ImGuiIO io = ImGui.getIO();
             io.setMouseWheelH(io.getMouseWheelH() + (float) xoffset);
             io.setMouseWheel(io.getMouseWheel() + (float) yoffset);
+        }
+    };
+    private static final GLFWCharCallback charCallback = new GLFWCharCallback() {
+        @Override
+        public void invoke(long window, int codepoint) {
+            final ImGuiIO io = ImGui.getIO();
+            io.addInputCharacter(codepoint);
         }
     };
 
@@ -116,5 +130,9 @@ public class Input {
 
     public static GLFWScrollCallback getScrollCallback() {
         return scrollCallback;
+    }
+
+    public static GLFWCharCallback getCharCallback() {
+        return charCallback;
     }
 }
