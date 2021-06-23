@@ -12,6 +12,6 @@ void main()
 {
     float x = texture(myTexture2, texCoord).a;
     float y = texture(myTexture1, texCoord).a;
-    FragColor = texture(myTexture2, texCoord); // vec4(1.0f, 0.5f, 0.2f, 1.0f);
+    FragColor = texture(myTexture1, texCoord) * vec4(1.0f, 0.0f, 0.0f, 1.0f); // vec4(1.0f, 0.5f, 0.2f, 1.0f);
     //FragColor = mix(texture(myTexture1, texCoord), texture(myTexture2, texCoord), 0.2 * x );
 }
