@@ -9,7 +9,7 @@ import org.joml.Vector4f;
 import java.util.Arrays;
 
 public class Sprite extends Component {
-    private Vector4f color;
+    private Vector4f color = new Vector4f(1.0f, 1.0f, 1.0f, 1.0f);
     // the default textureID is 0 so that if it is 0 then there is no texture bind to this sprite
     private int textureID;
     private Vector2f[] texCoords = new Vector2f[] {
@@ -21,34 +21,7 @@ public class Sprite extends Component {
     private Transform lastTransform;
     private boolean isDirty = true;
 
-    public Sprite(Vector4f color) {
-        this.color = color;
-    }
-
-    public Sprite(int textureID) {
-        this.textureID = textureID;
-        this.texCoords = new Vector2f[] {
-                new Vector2f(0.0f, 1.0f),
-                new Vector2f(1.0f, 1.0f),
-                new Vector2f(1.0f, 0.0f),
-                new Vector2f(0.0f, 0.0f)
-        };
-        this.color = new Vector4f(1.0f, 1.0f, 1.0f, 1.0f);
-    }
-
-    public Sprite(int textureID, Vector2f[] texCoords) {
-        this.textureID = textureID;
-        this.texCoords = texCoords;
-        this.color = new Vector4f(1.0f, 1.0f, 1.0f, 1.0f);
-    }
-
-    public Sprite(Sprite sprite) {
-        this.textureID = sprite.getTextureID();
-        this.texCoords = sprite.getTexCoords();
-        this.color = sprite.getColor();
-        this.isDirty = sprite.isDirty();
-        this.lastTransform = sprite.lastTransform;
-    }
+    public Sprite() {}
 
     @Override
     public void start() {
@@ -97,6 +70,14 @@ public class Sprite extends Component {
             this.color = color;
             isDirty = true;
         }
+    }
+
+    public void setSprite(Sprite sprite) {
+        this.textureID = sprite.getTextureID();
+        this.texCoords = sprite.getTexCoords();
+        this.color = sprite.getColor();
+        this.isDirty = sprite.isDirty();
+        this.lastTransform = sprite.lastTransform;
     }
 
     public Vector4f getColor() {

@@ -23,8 +23,11 @@ public class AssetPool {
 
     public static void addSpriteSheet(String spriteSheetPath, int spriteWidth,
                                       int spriteHeight, int spriteNum, int spacingX, int spacingY) {
-        if (!spriteSheets.containsKey(spriteSheetPath)) spriteSheets.put(spriteSheetPath, new SpriteSheet(
-                getTextureInfo(spriteSheetPath), spriteWidth, spriteHeight, spriteNum, spacingX, spacingY));
+        if (!spriteSheets.containsKey(spriteSheetPath)) {
+            SpriteSheet spriteSheetToBeAdd = new SpriteSheet();
+            spriteSheetToBeAdd.init(getTextureInfo(spriteSheetPath), spriteWidth, spriteHeight, spriteNum, spacingX, spacingY);
+            spriteSheets.put(spriteSheetPath, spriteSheetToBeAdd);
+        }
     }
 
     public static SpriteSheet getSpriteSheet(String spriteSheetPath) {

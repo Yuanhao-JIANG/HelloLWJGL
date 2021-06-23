@@ -6,10 +6,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class SpriteSheet {
-    private final Integer[] textureInfo;
-    private final List<Sprite> sprites;
+    private Integer[] textureInfo = null;
+    private List<Sprite> sprites = null;
 
-    public SpriteSheet(Integer[] textureIDInfo, int spriteWidth, int spriteHeight, int spriteNum, int spacingX, int spacingY) {
+    public SpriteSheet() {}
+    public void init(Integer[] textureIDInfo, int spriteWidth, int spriteHeight, int spriteNum, int spacingX, int spacingY) {
         sprites = new ArrayList<>();
         this.textureInfo = textureIDInfo;
         int currentX = 0;
@@ -26,7 +27,9 @@ public class SpriteSheet {
                     new Vector2f(rightX, bottomY),
                     new Vector2f(leftX, bottomY)
             };
-            Sprite sprite = new Sprite(textureIDInfo[0], texCoords);
+            Sprite sprite = new Sprite();
+            sprite.setTextureID(textureIDInfo[0]);
+            sprite.setTexCoords(texCoords);
             sprites.add(sprite);
 
             currentX += spriteWidth + spacingX;
