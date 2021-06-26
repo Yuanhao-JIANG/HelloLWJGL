@@ -1,7 +1,5 @@
 package firstOpenGLGame.main.java.jade;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 import firstOpenGLGame.main.java.components.Sprite;
 import firstOpenGLGame.main.java.components.SpriteSheet;
 import firstOpenGLGame.main.java.renderer.Renderer;
@@ -11,10 +9,6 @@ import org.joml.Vector2f;
 import org.joml.Vector3f;
 
 public class LevelEditorScene extends Scene{
-    private GameObject obj0;
-    private GameObject obj1;
-    private GameObject obj2;
-    private GameObject obj3;
     private SpriteSheet spriteSheet;
     public LevelEditorScene() {}
 
@@ -26,54 +20,51 @@ public class LevelEditorScene extends Scene{
         camera = new Camera();
         renderer = new Renderer();
 
-        obj0 = new GameObject("mario",
-                new Transform(new Vector3f(100, 400, 0), new Vector2f(256, 256)));
-        Sprite obj0Sprite = new Sprite();
-        obj0Sprite.setSprite(spriteSheet.getSprite(1));
-        obj0.addComponent(obj0Sprite);
-        addGameObjectToScene(obj0);
+        if (!levelLoaded) {
+            System.out.println("levelLoad = false, loading...");
 
-        obj1 = new GameObject("goomba",
-                new Transform(new Vector3f(400, 400, -1), new Vector2f(256, 256)));
-        Sprite obj1Sprite = new Sprite();
-        obj1Sprite.setSprite(spriteSheet.getSprite(14));
-        obj1.addComponent(obj1Sprite);
-        addGameObjectToScene(obj1);
+            //initiate, create or active game object
+            GameObject obj0 = new GameObject("mario",
+                    new Transform(new Vector3f(100, 400, 0), new Vector2f(256, 256)));
+            Sprite obj0Sprite = new Sprite();
+            obj0Sprite.setSprite(spriteSheet.getSprite(1));
+            obj0.addComponent(obj0Sprite);
+            addGameObjectToScene(obj0);
 
-        obj2 = new GameObject("greenSquare",
-                new Transform(new Vector3f(300, 520, 0), new Vector2f(100, 100)));
-        Sprite obj2Sprite = new Sprite();
-        obj2Sprite.setTextureID(AssetPool.getTextureInfo("src/firstOpenGLGame/assets/images/greenSquare.png")[0]);
-        obj2.addComponent(obj2Sprite);
-        addGameObjectToScene(obj2);
+            GameObject obj1 = new GameObject("goomba",
+                    new Transform(new Vector3f(400, 400, -1), new Vector2f(256, 256)));
+            Sprite obj1Sprite = new Sprite();
+            obj1Sprite.setSprite(spriteSheet.getSprite(14));
+            obj1.addComponent(obj1Sprite);
+            addGameObjectToScene(obj1);
 
-        obj3 = new GameObject("redSquare",
-                new Transform(new Vector3f(350, 520, 1), new Vector2f(100, 100)));
-        Sprite obj3Sprite = new Sprite();
-        obj3Sprite.setTextureID(AssetPool.getTextureInfo("src/firstOpenGLGame/assets/images/redSquare.png")[0]);
-        obj3.addComponent(obj3Sprite);
-        addGameObjectToScene(obj3);
+            GameObject obj2 = new GameObject("greenSquare",
+                    new Transform(new Vector3f(300, 520, 0), new Vector2f(100, 100)));
+            Sprite obj2Sprite = new Sprite();
+            obj2Sprite.setTextureID(AssetPool.getTextureInfo("src/firstOpenGLGame/assets/images/greenSquare.png")[0]);
+            obj2.addComponent(obj2Sprite);
+            addGameObjectToScene(obj2);
 
-        activeGameObject = obj2;
+            GameObject obj3 = new GameObject("redSquare",
+                    new Transform(new Vector3f(350, 520, 1), new Vector2f(100, 100)));
+            Sprite obj3Sprite = new Sprite();
+            obj3Sprite.setTextureID(AssetPool.getTextureInfo("src/firstOpenGLGame/assets/images/redSquare.png")[0]);
+            obj3.addComponent(obj3Sprite);
+            addGameObjectToScene(obj3);
+        }
 
-        Gson gson = new GsonBuilder()
-                .setPrettyPrinting()
-                .registerTypeAdapter(Component.class, new ComponentSerializer())
-                .registerTypeAdapter(Component.class, new ComponentDeserializer())
-                .registerTypeAdapter(GameObject.class, new GameObjectDeserializer())
-                .create();
-        String serialized = gson.toJson(obj0);
-        System.out.println(serialized);
-        GameObject deserialized = gson.fromJson(serialized, GameObject.class);
-        System.out.println(deserialized);
+        activeGameObject = gameObjects.get(2);
     }
 
     public void loadResources() {
-        AssetPool.getShaderID("src/firstOpenGLGame/assets/shaders/vertex.glsl",
+        AssetPool.addShaderID("src/firstOpenGLGame/assets/shaders/vertex.glsl",
                 "src/firstOpenGLGame/assets/shaders/fragment.glsl");
 
         AssetPool.addSpriteSheet("src/firstOpenGLGame/assets/images/spriteSheet.png", 16,
                 16, 26, 0, 0);
+
+        AssetPool.addTextureInfo("src/firstOpenGLGame/assets/images/greenSquare.png");
+        AssetPool.addTextureInfo("src/firstOpenGLGame/assets/images/redSquare.png");
     }
 
     private int spriteIndex1 = 1;
@@ -92,8 +83,8 @@ public class LevelEditorScene extends Scene{
             if (spriteIndex2 > 15) {
                 spriteIndex2 = 14;
             }
-            obj0.getComponent(Sprite.class).reset(spriteSheet.getSprite(spriteIndex1));
-            obj1.getComponent(Sprite.class).reset(spriteSheet.getSprite(spriteIndex2));
+            gameObjects.get(0).getComponent(Sprite.class).reset(spriteSheet.getSprite(spriteIndex1));
+            gameObjects.get(1).getComponent(Sprite.class).reset(spriteSheet.getSprite(spriteIndex2));
         }
         //obj0.transform.position.x += 150 * dt;
         //obj1.transform.position.x += 150 * dt;

@@ -10,14 +10,23 @@ public class AssetPool {
     private static final Map<String, Integer[]> textureInfos = new HashMap<>();
     private static final Map<String, SpriteSheet> spriteSheets = new HashMap<>();
 
-    public static Integer getShaderID(String vertPath, String fragPath) {
+    public static void addShaderID(String vertPath, String fragPath) {
         String key = vertPath + fragPath;
         if (!shaderIDs.containsKey(key)) shaderIDs.put(key, ShaderUtils.load(vertPath, fragPath));
+    }
+
+    public static Integer getShaderID(String vertPath, String fragPath) {
+        String key = vertPath + fragPath;
+        if (!shaderIDs.containsKey(key)) addShaderID(vertPath, fragPath);
         return shaderIDs.get(key);
     }
 
-    public static Integer[] getTextureInfo(String imagePath) {
+    public static void addTextureInfo(String imagePath) {
         if (!textureInfos.containsKey(imagePath)) textureInfos.put(imagePath, TextureUtil.genTextureID(imagePath));
+    }
+
+    public static Integer[] getTextureInfo(String imagePath) {
+        if (!textureInfos.containsKey(imagePath)) addTextureInfo(imagePath);
         return textureInfos.get(imagePath);
     }
 
@@ -25,7 +34,8 @@ public class AssetPool {
                                       int spriteHeight, int spriteNum, int spacingX, int spacingY) {
         if (!spriteSheets.containsKey(spriteSheetPath)) {
             SpriteSheet spriteSheetToBeAdd = new SpriteSheet();
-            spriteSheetToBeAdd.init(getTextureInfo(spriteSheetPath), spriteWidth, spriteHeight, spriteNum, spacingX, spacingY);
+            spriteSheetToBeAdd.init(getTextureInfo(spriteSheetPath), spriteWidth, spriteHeight, spriteNum, spacingX,
+                    spacingY);
             spriteSheets.put(spriteSheetPath, spriteSheetToBeAdd);
         }
     }

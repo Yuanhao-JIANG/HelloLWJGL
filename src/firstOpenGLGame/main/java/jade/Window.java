@@ -46,11 +46,13 @@ public class Window {
         switch (newScene) {
             case 0:
                 currentScene = new LevelEditorScene();
+                currentScene.load();
                 currentScene.init();
                 currentScene.start();
                 break;
             case 1:
                 currentScene = new LevelScene();
+                currentScene.load();
                 currentScene.init();
                 currentScene.start();
                 break;
@@ -133,6 +135,7 @@ public class Window {
 
             glfwSwapBuffers(glfwWindow);
         }
+        currentScene.save();
     }
 
     public static int getWidth() {

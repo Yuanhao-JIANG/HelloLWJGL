@@ -1,8 +1,15 @@
 package firstOpenGLGame.main.java.jade;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import firstOpenGLGame.main.java.renderer.Renderer;
 import imgui.ImGui;
 
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -12,6 +19,8 @@ public abstract class Scene {
     protected Camera camera;
     protected Renderer renderer;
     protected GameObject activeGameObject = null;
+    protected Boolean levelLoaded = false;
+
     public Scene() {
 
     }
@@ -51,4 +60,49 @@ public abstract class Scene {
     }
 
     public void imGui() {}
+
+    public void save() {
+        Gson gson = new GsonBuilder()
+                .setPrettyPrinting()
+                .registerTypeAdapter(Component.class, new ComponentSerializer())
+                .registerTypeAdapter(Component.class, new ComponentDeserializer())
+                .registerTypeAdapter(GameObject.class, new GameObjectDeserializer())
+                .create();
+
+        try {
+            FileWriter fileWriter = new FileWriter("level.txt", false);
+            fileWriter.write(gson.toJson(gameObjects));
+            fileWriter.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void load() {
+        File file = new File("level.txt");
+        if (!file.exists()) return;
+        Gson gson = new GsonBuilder()
+                .setPrettyPrinting()
+                .registerTypeAdapter(Component.class, new ComponentSerializer())
+                .registerTypeAdapter(Component.class, new ComponentDeserializer())
+                .registerTypeAdapter(GameObject.class, new GameObjectDeserializer())
+                .create();
+
+        String inputFile = "";
+        try {
+            inputFile = new String(Files.readAllBytes(Paths.get("level.txt")));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        if (!inputFile.equals("")) {
+            GameObject[] loadedGameObjects = gson.fromJson(inputFile, GameObject[].class);
+            for (GameObject loadedGameObject : loadedGameObjects) {
+                addGameObjectToScene(loadedGameObject);
+                System.out.println("game object added!");
+            }
+
+            levelLoaded = true;
+        }
+    }
 }
