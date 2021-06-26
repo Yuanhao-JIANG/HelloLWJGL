@@ -54,12 +54,6 @@ public class GameObject {
 
     public void update(float dt) {
         for (Component component : components) {
-
-            // the following line of code is added for the reason that if the obj gets serialized, the gameObject field
-            // of the components of this game object is not serialized (as we set the gameObject inside Component.java
-            // transient), so it needs to be reset.
-            if (component.gameObject != this) component.gameObject = this;
-
             component.update(dt);
         }
     }
