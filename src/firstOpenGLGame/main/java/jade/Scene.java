@@ -99,7 +99,6 @@ public abstract class Scene {
             GameObject[] loadedGameObjects = gson.fromJson(inputFile, GameObject[].class);
             for (GameObject loadedGameObject : loadedGameObjects) {
                 addGameObjectToScene(loadedGameObject);
-                System.out.println("game object added!");
             }
 
             levelLoaded = true;

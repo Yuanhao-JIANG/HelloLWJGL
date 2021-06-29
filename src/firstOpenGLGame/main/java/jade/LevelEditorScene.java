@@ -1,5 +1,6 @@
 package firstOpenGLGame.main.java.jade;
 
+import firstOpenGLGame.main.java.components.Rigidbody;
 import firstOpenGLGame.main.java.components.Sprite;
 import firstOpenGLGame.main.java.components.SpriteSheet;
 import firstOpenGLGame.main.java.renderer.Renderer;
@@ -10,6 +11,7 @@ import org.joml.Vector3f;
 
 public class LevelEditorScene extends Scene{
     private SpriteSheet spriteSheet;
+    boolean needReload = false;
     public LevelEditorScene() {}
 
     @Override
@@ -20,8 +22,9 @@ public class LevelEditorScene extends Scene{
         camera = new Camera();
         renderer = new Renderer();
 
-        if (!levelLoaded) {
-            System.out.println("levelLoad = false, loading...");
+        if (!levelLoaded || needReload) {
+            gameObjects.clear();
+            System.out.println("loading...");
 
             //initiate, create or active game object
             GameObject obj0 = new GameObject("mario",
@@ -43,6 +46,7 @@ public class LevelEditorScene extends Scene{
             Sprite obj2Sprite = new Sprite();
             obj2Sprite.setTextureID(AssetPool.getTextureInfo("src/firstOpenGLGame/assets/images/greenSquare.png")[0]);
             obj2.addComponent(obj2Sprite);
+            obj2.addComponent(new Rigidbody());
             addGameObjectToScene(obj2);
 
             GameObject obj3 = new GameObject("redSquare",
