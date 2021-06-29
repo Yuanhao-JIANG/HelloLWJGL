@@ -35,9 +35,7 @@ public class Window {
     }
 
     public static Window get(int width, int height, String title, float r, float g, float b, float a) {
-        if (Window.window == null) {
-            Window.window = new Window(width, height, title, r, g, b, a);
-        }
+        if (Window.window == null) Window.window = new Window(width, height, title, r, g, b, a);
 
         return Window.window;
     }
@@ -46,20 +44,17 @@ public class Window {
         switch (newScene) {
             case 0:
                 currentScene = new LevelEditorScene();
-                currentScene.load();
-                currentScene.init();
-                currentScene.start();
                 break;
             case 1:
                 currentScene = new LevelScene();
-                currentScene.load();
-                currentScene.init();
-                currentScene.start();
                 break;
             default:
                 assert false: "Unknown scene" + newScene + ".";
-                break;
+                return;
         }
+        currentScene.load();
+        currentScene.init();
+        currentScene.start();
     }
 
     public static Scene getCurrentScene() {
