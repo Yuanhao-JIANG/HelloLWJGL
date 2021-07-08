@@ -11,7 +11,7 @@ import org.joml.Vector3f;
 
 public class LevelEditorScene extends Scene{
     private SpriteSheet spriteSheet;
-    boolean needReload = false;
+    boolean needReload = true;
     public LevelEditorScene() {}
 
     @Override
@@ -44,7 +44,8 @@ public class LevelEditorScene extends Scene{
             GameObject obj2 = new GameObject("greenSquare",
                     new Transform(new Vector3f(300, 520, 0), new Vector2f(100, 100)));
             Sprite obj2Sprite = new Sprite();
-            obj2Sprite.setTextureID(AssetPool.getTextureInfo("src/firstOpenGLGame/assets/images/greenSquare.png")[0]);
+            obj2Sprite.setTextureID(AssetPool
+                    .getTextureInfo("src/firstOpenGLGame/assets/images/greenSquare.png")[0]);
             obj2.addComponent(obj2Sprite);
             obj2.addComponent(new Rigidbody());
             addGameObjectToScene(obj2);
@@ -52,7 +53,8 @@ public class LevelEditorScene extends Scene{
             GameObject obj3 = new GameObject("redSquare",
                     new Transform(new Vector3f(350, 520, 1), new Vector2f(100, 100)));
             Sprite obj3Sprite = new Sprite();
-            obj3Sprite.setTextureID(AssetPool.getTextureInfo("src/firstOpenGLGame/assets/images/redSquare.png")[0]);
+            obj3Sprite.setTextureID(AssetPool
+                    .getTextureInfo("src/firstOpenGLGame/assets/images/redSquare.png")[0]);
             obj3.addComponent(obj3Sprite);
             addGameObjectToScene(obj3);
         }
@@ -64,8 +66,11 @@ public class LevelEditorScene extends Scene{
         AssetPool.addShaderID("src/firstOpenGLGame/assets/shaders/vertex.glsl",
                 "src/firstOpenGLGame/assets/shaders/fragment.glsl");
 
-        AssetPool.addSpriteSheet("src/firstOpenGLGame/assets/images/spriteSheet.png", 16,
-                16, 26, 0, 0);
+        AssetPool.addSpriteSheet("src/firstOpenGLGame/assets/images/spriteSheet.png",
+                16, 16, 26, 0, 0);
+
+        AssetPool.addSpriteSheet("src/firstOpenGLGame/assets/images/decorationsAndBlocks.png",
+                16, 16, 81, 0, 0);
 
         AssetPool.addTextureInfo("src/firstOpenGLGame/assets/images/greenSquare.png");
         AssetPool.addTextureInfo("src/firstOpenGLGame/assets/images/redSquare.png");

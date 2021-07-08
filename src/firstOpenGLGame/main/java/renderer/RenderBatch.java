@@ -23,6 +23,7 @@ public class RenderBatch {
     private int shaderID, vao, vbo;
     private List<Integer> textureIDs;
     private final int[] textUnitIndexArray = {0, 1, 2, 3, 4, 5, 6, 7};
+    private final int[] textUnitTextIDLinkers = new int[textUnitIndexArray.length];
 
     public RenderBatch(int maxSpritesNum, String vertPath, String fragPath) {
         this.maxSpritesNum = maxSpritesNum;
@@ -112,8 +113,10 @@ public class RenderBatch {
                 Window.getCurrentScene().getCamera().getViewMatrix());
         for (int i = 0; i < textureIDs.size(); i++) {
             bindTexture(GL_TEXTURE0 + i, textureIDs.get(i));
+            textUnitTextIDLinkers[i] = textureIDs.get(i);
         }
         setTextUnitArray(shaderID, "uTextures", textUnitIndexArray);
+        setTextUnitTextIDLinker(shaderID, "uTextUnitTextIDLinkers", textUnitTextIDLinkers);
         glBindVertexArray(vao);
         draw(spriteNum * 6);
 

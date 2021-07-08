@@ -10,7 +10,8 @@ public class SpriteSheet {
     private List<Sprite> sprites = null;
 
     public SpriteSheet() {}
-    public void init(Integer[] textureIDInfo, int spriteWidth, int spriteHeight, int spriteNum, int spacingX, int spacingY) {
+    public void init(Integer[] textureIDInfo, int spriteWidth, int spriteHeight, int spriteNum, int spacingX,
+                     int spacingY) {
         sprites = new ArrayList<>();
         this.textureInfo = textureIDInfo;
         int currentX = 0;
