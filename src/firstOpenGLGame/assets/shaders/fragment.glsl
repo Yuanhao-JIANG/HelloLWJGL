@@ -4,6 +4,7 @@ in vec2 fTexCoord;
 in float fTexID;
 
 uniform sampler2D uTextures[8];
+// to link a texture ID (value) and a texture unit (index)
 uniform int uTextUnitTextIDLinkers[8];
 
 out vec4 color;

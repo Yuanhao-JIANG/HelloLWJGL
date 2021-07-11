@@ -18,6 +18,7 @@ public class Sprite extends Component {
             new Vector2f(1.0f, 0.0f),
             new Vector2f(0.0f, 0.0f)
     };
+    private Vector2f size = new Vector2f(10.0f, 10.0f);
     private Transform lastTransform;
     private boolean isDirty = true;
 
@@ -65,6 +66,10 @@ public class Sprite extends Component {
         }
     }
 
+    public void setSize(float width, float height) {
+        this.size.set(width, height);
+    }
+
     public void setColor(Vector4f color) {
         if (!this.color.equals(color)) {
             this.color = color;
@@ -90,6 +95,10 @@ public class Sprite extends Component {
 
     public Vector2f[] getTexCoords() {
         return texCoords;
+    }
+
+    public Vector2f getSize() {
+        return size;
     }
 
     public boolean isDirty() {

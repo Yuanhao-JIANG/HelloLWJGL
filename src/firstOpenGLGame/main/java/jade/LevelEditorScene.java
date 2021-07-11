@@ -6,11 +6,13 @@ import firstOpenGLGame.main.java.components.SpriteSheet;
 import firstOpenGLGame.main.java.renderer.Renderer;
 import firstOpenGLGame.main.java.util.AssetPool;
 import imgui.ImGui;
+import imgui.ImVec2;
 import org.joml.Vector2f;
 import org.joml.Vector3f;
 
 public class LevelEditorScene extends Scene{
     private SpriteSheet spriteSheet;
+    private SpriteSheet blocks;
     boolean needReload = true;
     public LevelEditorScene() {}
 
@@ -18,6 +20,7 @@ public class LevelEditorScene extends Scene{
     public void init() {
         loadResources();
         spriteSheet = AssetPool.getSpriteSheet("src/firstOpenGLGame/assets/images/spriteSheet.png");
+        blocks = AssetPool.getSpriteSheet("src/firstOpenGLGame/assets/images/decorationsAndBlocks.png");
 
         camera = new Camera();
         renderer = new Renderer();
@@ -107,7 +110,36 @@ public class LevelEditorScene extends Scene{
     @Override
     public void imGui() {
         ImGui.begin("Test window");
-        ImGui.text("Testing, testing.");
+
+        ImVec2 windowPos = new ImVec2();
+        ImGui.getWindowPos(windowPos);
+        ImVec2 windowSize = new ImVec2();
+        ImGui.getWindowSize(windowSize);
+        ImVec2 itemSpacing = new ImVec2();
+        ImGui.getStyle().getItemSpacing(itemSpacing);
+
+        float windowRight = windowPos.x + windowSize.x;
+        for (int i = 0; i < blocks.getSize(); i++) {
+            Sprite sprite = blocks.getSprite(i);
+            float spriteWidth = sprite.getSize().x;
+            float spriteHeight = sprite.getSize().y;
+            int id = sprite.getTextureID();
+            Vector2f[] texCoords = sprite.getTexCoords();
+
+            ImGui.pushID(i);
+            if (ImGui.imageButton(id, spriteWidth * 2, spriteHeight * 2,
+                    texCoords[0].x, texCoords[0].y, texCoords[2].x, texCoords[2].y)) {
+                System.out.println("Button " + i + " clicked.");
+            }
+            ImGui.popID();
+
+            ImVec2 buttonPos = new ImVec2();
+            ImGui.getItemRectMax(buttonPos);
+            if (i + 1 < blocks.getSize() && buttonPos.x + itemSpacing.x +spriteWidth < windowRight) {
+                ImGui.sameLine();
+            }
+        }
+
         ImGui.end();
     }
 }
