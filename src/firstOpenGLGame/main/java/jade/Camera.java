@@ -11,18 +11,34 @@ public class Camera {
     private final Matrix4f orthoProjectionMatrix = new Matrix4f().setOrtho(
             0f, 960f, 0f, 540f, 0.1f, 100f);
     private final Matrix4f viewMatrix = new Matrix4f();
+    private final Matrix4f inverseOrthoProjectionMatrix = new Matrix4f();
+    private final Matrix4f inverseViewMatrix = new Matrix4f();
     public Camera() {
         camPos.set(0.0f, 0.0f, 20.0f);
         camUp.set(0.0f, 1.0f, 0.0f);
         camFront.set(0.0f, 0.0f, -1.0f);
         camTarget.set(0.0f, 0.0f, 0.0f);
+        orthoProjectionMatrix.invert(inverseOrthoProjectionMatrix);
     }
 
+    private void updateViewMatrix() {
+        viewMatrix.setLookAt(camPos, camTarget, camUp);
+        viewMatrix.invert(inverseViewMatrix);
+    }
     public Matrix4f getViewMatrix() {
-        return viewMatrix.setLookAt(camPos, camTarget, camUp);
+        updateViewMatrix();
+        return viewMatrix;
     }
 
     public Matrix4f getOrthoProjectionMatrix() {
         return orthoProjectionMatrix;
+    }
+
+    public Matrix4f getInverseViewMatrix() {
+        return inverseViewMatrix;
+    }
+
+    public Matrix4f getInverseOrthoProjectionMatrix() {
+        return inverseOrthoProjectionMatrix;
     }
 }

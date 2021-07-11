@@ -2,6 +2,7 @@ package firstOpenGLGame.main.java.jade;
 
 import imgui.ImGui;
 import imgui.ImGuiIO;
+import org.joml.Vector4f;
 import org.lwjgl.glfw.*;
 
 import static org.lwjgl.glfw.GLFW.*;
@@ -104,6 +105,22 @@ public class Input {
 
     public static float getMouseY() {
         return mouseY;
+    }
+
+    public static float getWorldMouseX() {
+        float NDC_X = (2.0f * mouseX / Window.getWidth()) - 1.0f;
+        Vector4f tmp = new Vector4f(NDC_X, 0.0f, 0.0f, 1.0f);
+        tmp.mul(Window.getCurrentScene().camera.getInverseOrthoProjectionMatrix())
+                .mul(Window.getCurrentScene().camera.getInverseViewMatrix());
+        return tmp.x;
+    }
+
+    public static float getWorldMouseY() {
+        float NDC_Y = (2.0f * mouseY / Window.getHeight()) - 1.0f;
+        Vector4f tmp = new Vector4f(0.0f, NDC_Y, 0.0f, 1.0f);
+        tmp.mul(Window.getCurrentScene().camera.getInverseOrthoProjectionMatrix())
+                .mul(Window.getCurrentScene().camera.getInverseViewMatrix());
+        return tmp.y;
     }
 
     public static float getScrollXOffset() {

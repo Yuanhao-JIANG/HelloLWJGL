@@ -10,6 +10,9 @@ import imgui.ImVec2;
 import org.joml.Vector2f;
 import org.joml.Vector3f;
 
+import static firstOpenGLGame.main.java.jade.Input.*;
+import static org.lwjgl.glfw.GLFW.GLFW_MOUSE_BUTTON_LEFT;
+
 public class LevelEditorScene extends Scene{
     private SpriteSheet spriteSheet;
     private SpriteSheet blocks;
@@ -84,6 +87,7 @@ public class LevelEditorScene extends Scene{
     private float spriteFlipTimeLeft = 0.0f;
     @Override
     public void update(float dt) {
+        if (isMouseButtonDown(GLFW_MOUSE_BUTTON_LEFT)) System.out.println(getWorldMouseX() + ", " + getWorldMouseY());
         spriteFlipTimeLeft -= dt;
         if (spriteFlipTimeLeft < 0) {
             spriteFlipTimeLeft = 0.2f;
