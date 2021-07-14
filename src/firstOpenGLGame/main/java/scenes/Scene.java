@@ -1,7 +1,13 @@
-package firstOpenGLGame.main.java.jade;
+package firstOpenGLGame.main.java.scenes;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import firstOpenGLGame.main.java.components.Component;
+import firstOpenGLGame.main.java.components.ComponentDeserializer;
+import firstOpenGLGame.main.java.components.ComponentSerializer;
+import firstOpenGLGame.main.java.jade.Camera;
+import firstOpenGLGame.main.java.jade.GameObject;
+import firstOpenGLGame.main.java.jade.GameObjectDeserializer;
 import firstOpenGLGame.main.java.renderer.Renderer;
 import imgui.ImGui;
 

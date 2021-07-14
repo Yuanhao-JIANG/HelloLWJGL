@@ -1,4 +1,4 @@
-package firstOpenGLGame.main.java.jade;
+package firstOpenGLGame.main.java.components;
 
 import com.google.gson.*;
 

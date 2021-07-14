@@ -1,5 +1,6 @@
-package firstOpenGLGame.main.java.jade;
+package firstOpenGLGame.main.java.components;
 
+import firstOpenGLGame.main.java.jade.GameObject;
 import imgui.ImGui;
 import org.joml.Vector3f;
 import org.joml.Vector4f;

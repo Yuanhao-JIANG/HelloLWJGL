@@ -1,6 +1,7 @@
 package firstOpenGLGame.main.java.jade;
 
 import com.google.gson.*;
+import firstOpenGLGame.main.java.components.Component;
 
 import java.lang.reflect.Type;
 

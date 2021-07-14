@@ -1,8 +1,10 @@
-package firstOpenGLGame.main.java.jade;
+package firstOpenGLGame.main.java.scenes;
+
+import firstOpenGLGame.main.java.jade.Input;
 
 import static org.lwjgl.glfw.GLFW.GLFW_KEY_SPACE;
 
-public class LevelScene extends Scene{
+public class LevelScene extends Scene {
     public LevelScene() {
 
     }

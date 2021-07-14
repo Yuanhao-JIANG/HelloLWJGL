@@ -1,5 +1,8 @@
 package firstOpenGLGame.main.java.jade;
 
+import firstOpenGLGame.main.java.scenes.LevelEditorScene;
+import firstOpenGLGame.main.java.scenes.LevelScene;
+import firstOpenGLGame.main.java.scenes.Scene;
 import org.lwjgl.Version;
 import org.lwjgl.glfw.GLFW;
 import org.lwjgl.glfw.GLFWErrorCallback;

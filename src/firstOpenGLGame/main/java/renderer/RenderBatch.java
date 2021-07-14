@@ -20,8 +20,9 @@ public class RenderBatch {
     private final int maxSpritesNum;
     private int spriteNum;
     private final float[] vertices;
-    private int shaderID, vao, vbo;
-    private List<Integer> textureIDs;
+    private final int shaderID;
+    private int vao, vbo;
+    private final List<Integer> textureIDs;
     private final int[] textUnitIndexArray = {0, 1, 2, 3, 4, 5, 6, 7};
     private final int[] textUnitTextIDLinkers = new int[textUnitIndexArray.length];
 

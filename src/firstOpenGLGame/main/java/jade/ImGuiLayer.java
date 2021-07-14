@@ -1,5 +1,6 @@
 package firstOpenGLGame.main.java.jade;
 
+import firstOpenGLGame.main.java.scenes.Scene;
 import imgui.ImFontAtlas;
 import imgui.ImFontConfig;
 import imgui.ImGui;

@@ -1,8 +1,11 @@
-package firstOpenGLGame.main.java.jade;
+package firstOpenGLGame.main.java.scenes;
 
 import firstOpenGLGame.main.java.components.Rigidbody;
 import firstOpenGLGame.main.java.components.Sprite;
 import firstOpenGLGame.main.java.components.SpriteSheet;
+import firstOpenGLGame.main.java.jade.Camera;
+import firstOpenGLGame.main.java.jade.GameObject;
+import firstOpenGLGame.main.java.jade.Transform;
 import firstOpenGLGame.main.java.renderer.Renderer;
 import firstOpenGLGame.main.java.util.AssetPool;
 import imgui.ImGui;
@@ -13,7 +16,7 @@ import org.joml.Vector3f;
 import static firstOpenGLGame.main.java.jade.Input.*;
 import static org.lwjgl.glfw.GLFW.GLFW_MOUSE_BUTTON_LEFT;
 
-public class LevelEditorScene extends Scene{
+public class LevelEditorScene extends Scene {
     private SpriteSheet spriteSheet;
     private SpriteSheet blocks;
     boolean needReload = true;
@@ -87,7 +90,8 @@ public class LevelEditorScene extends Scene{
     private float spriteFlipTimeLeft = 0.0f;
     @Override
     public void update(float dt) {
-        if (isMouseButtonDown(GLFW_MOUSE_BUTTON_LEFT)) System.out.println(getWorldMouseX() + ", " + getWorldMouseY());
+//        if (isMouseButtonDown(GLFW_MOUSE_BUTTON_LEFT))
+//            System.out.println(getWorldMouseX() + ", " + getWorldMouseY());
         spriteFlipTimeLeft -= dt;
         if (spriteFlipTimeLeft < 0) {
             spriteFlipTimeLeft = 0.2f;
@@ -139,9 +143,8 @@ public class LevelEditorScene extends Scene{
 
             ImVec2 buttonPos = new ImVec2();
             ImGui.getItemRectMax(buttonPos);
-            if (i + 1 < blocks.getSize() && buttonPos.x + itemSpacing.x +spriteWidth < windowRight) {
+            if (i + 1 < blocks.getSize() && buttonPos.x + itemSpacing.x + 2 * spriteWidth < windowRight)
                 ImGui.sameLine();
-            }
         }
 
         ImGui.end();

@@ -1,6 +1,5 @@
 package firstOpenGLGame.main.java.components;
 
-import firstOpenGLGame.main.java.jade.Component;
 import firstOpenGLGame.main.java.jade.Transform;
 import imgui.ImGui;
 import org.joml.Vector2f;

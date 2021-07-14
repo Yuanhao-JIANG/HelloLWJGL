@@ -1,7 +1,5 @@
 package firstOpenGLGame.main.java.components;
 
-import firstOpenGLGame.main.java.jade.Component;
-
 public class FontRenderer extends Component {
     private boolean isUpdating = false;
     @Override
