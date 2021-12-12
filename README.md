@@ -1,4 +1,4 @@
-# HelloLWJGL
+# Java_game_engine
 This repository is for me to learn to use LWJGL and other supporting technics to develop games using java.  
 
 The main technology include:
