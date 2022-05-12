@@ -12,3 +12,5 @@ JDK: jdk-11.0.9
 VM Option:
   1. firstOpenGLGame: -XstartOnFirstThread -ea -Dimgui.library.path=lib  
   2. learnOpenGL: -XstartOnFirstThread
+
+Note that this engine has not been finished yet, I will keep working on this occasionally if I have time.
