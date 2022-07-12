@@ -7,10 +7,8 @@ The main technology include:
   3. Google/Gson
   4. ...
 
-JDK: jdk-11.0.9  
-
-VM Option:
+VM Option for macOS:
   1. firstOpenGLGame: -XstartOnFirstThread -ea -Dimgui.library.path=lib  
   2. learnOpenGL: -XstartOnFirstThread
 
-Note that this engine has not been finished yet, I will keep working on this occasionally if I have time.
+#### Note that this engine has not been finished yet, I will keep working on this occasionally if I have time.
