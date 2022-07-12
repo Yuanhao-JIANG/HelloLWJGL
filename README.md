@@ -8,7 +8,7 @@ The main technology include:
   4. ...
 
 VM Option for macOS:
-  1. firstOpenGLGame: -XstartOnFirstThread -ea -Dimgui.library.path=lib  
-  2. learnOpenGL: -XstartOnFirstThread
+- firstOpenGLGame: -XstartOnFirstThread -ea -Dimgui.library.path=lib
+- learnOpenGL: -XstartOnFirstThread
 
 #### Note that this engine has not been finished yet, I will keep working on this occasionally if I have time.
